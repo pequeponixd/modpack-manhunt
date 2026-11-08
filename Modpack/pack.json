@@ -1,0 +1,39 @@
+{
+  "id": "manhunt",
+  "name": "Manhunt",
+  "description": "Corre o caza: manhunt y supervivencia",
+  "version": "1.0.0",
+  "minecraft": "1.20.1",
+  "loader": "fabric",
+  "loaderVersion": "",
+  "ramGb": 4,
+  "accent": "#ff8828",
+  "changelog": [
+    "Primera versión: Fabric 1.20.1 con Sodium, Lithium y más optimización",
+    "Brújula de manhunt, chat de voz y menú nuevo estilo dibujo animado"
+  ],
+  "externalUrls": {
+    "mods/fabric-api-0.92.12+1.20.1.jar": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",
+    "mods/sodium-fabric-0.5.13+mc1.20.1.jar": "https://cdn.modrinth.com/data/AANobbMI/versions/OihdIimA/sodium-fabric-0.5.13%2Bmc1.20.1.jar",
+    "mods/indium-1.0.36+mc1.20.1.jar": "https://cdn.modrinth.com/data/Orvt0mRa/versions/nQHYSjxO/indium-1.0.36%2Bmc1.20.1.jar",
+    "mods/lithium-fabric-mc1.20.1-0.11.4.jar": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/iEcXOkz4/lithium-fabric-mc1.20.1-0.11.4.jar",
+    "mods/ferritecore-6.0.1-fabric.jar": "https://cdn.modrinth.com/data/uXXizFIs/versions/unerR5MN/ferritecore-6.0.1-fabric.jar",
+    "mods/modernfix-fabric-5.25.2+mc1.20.1.jar": "https://cdn.modrinth.com/data/nmDcB62a/versions/rPmgLeZC/modernfix-fabric-5.25.2%2Bmc1.20.1.jar",
+    "mods/entityculling-fabric-1.11.3-mc1.20.1.jar": "https://cdn.modrinth.com/data/NNAgCjsB/versions/xSrd3qsM/entityculling-fabric-1.11.3-mc1.20.1.jar",
+    "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar": "https://cdn.modrinth.com/data/5ZwdcRci/versions/iwYUrQJO/ImmediatelyFast-Fabric-1.5.5%2B1.20.4.jar",
+    "mods/dynamic-fps-3.11.4+minecraft-1.20.0-fabric.jar": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/QwPQBhiQ/dynamic-fps-3.11.4%2Bminecraft-1.20.0-fabric.jar",
+    "mods/sodium-extra-0.5.9+mc1.20.1.jar": "https://cdn.modrinth.com/data/PtjYWJkn/versions/mDbF0LZT/sodium-extra-0.5.9%2Bmc1.20.1.jar",
+    "mods/reeses_sodium_options-1.7.2+mc1.20.1-build.101.jar": "https://cdn.modrinth.com/data/Bh37bMuy/versions/Rc9pkPug/reeses_sodium_options-1.7.2%2Bmc1.20.1-build.101.jar",
+    "mods/lambdynamiclights-4.4.0+1.20.1.jar": "https://cdn.modrinth.com/data/yBW8D80W/versions/AQfTnYyJ/lambdynamiclights-4.4.0%2B1.20.1.jar",
+    "mods/fancymenu_fabric_3.9.14_MC_1.20.1.jar": "https://cdn.modrinth.com/data/Wq5SjeWM/versions/ywyEnvpm/fancymenu_fabric_3.9.14_MC_1.20.1.jar",
+    "mods/konkrete_fabric_1.8.1_MC_1.20.1.jar": "https://cdn.modrinth.com/data/J81TRJWm/versions/RlBGFlWp/konkrete_fabric_1.8.1_MC_1.20.1.jar",
+    "mods/melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar": "https://cdn.modrinth.com/data/CVT4pFB2/versions/2o0oW8Yv/melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar",
+    "mods/drippyloadingscreen_fabric_3.1.5_MC_1.20.1.jar": "https://cdn.modrinth.com/data/v3CYg2V9/versions/ewn2Ljq2/drippyloadingscreen_fabric_3.1.5_MC_1.20.1.jar",
+    "mods/manhunt_pack-18.jar": "https://cdn.modrinth.com/data/LfV3RCjF/versions/ASn01VQ7/manhunt_pack-18.jar",
+    "mods/voicechat-fabric-1.20.1-2.6.22.jar": "https://cdn.modrinth.com/data/9eGKb6K1/versions/u5T0ji6n/voicechat-fabric-1.20.1-2.6.22.jar",
+    "mods/appleskin-fabric-mc1.20.1-2.5.2.jar": "https://cdn.modrinth.com/data/EsAfCjCV/versions/N5XeV21r/appleskin-fabric-mc1.20.1-2.5.2.jar",
+    "mods/Jade-1.20-Fabric-11.13.3.jar": "https://cdn.modrinth.com/data/nvQzSEkH/versions/ahavHbAT/Jade-1.20-Fabric-11.13.3.jar",
+    "mods/MouseTweaks-fabric-mc1.20-2.26.jar": "https://cdn.modrinth.com/data/aC3cM3Vq/versions/mjuG4AYd/MouseTweaks-fabric-mc1.20-2.26.jar",
+    "mods/modmenu-7.2.2.jar": "https://cdn.modrinth.com/data/mOgUt4GM/versions/lEkperf6/modmenu-7.2.2.jar"
+  }
+}

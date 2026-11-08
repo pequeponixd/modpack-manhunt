@@ -1,0 +1,292 @@
+{
+  "id": "manhunt",
+  "name": "Manhunt",
+  "description": "Corre o caza: manhunt y supervivencia",
+  "version": "1.0.0",
+  "minecraft": "1.20.1",
+  "loader": {
+    "type": "fabric",
+    "version": ""
+  },
+  "icon": "icon.png",
+  "background": "background.png",
+  "logo": "logo.png",
+  "accent": "#ff8828",
+  "changelog": [
+    "Primera versión: Fabric 1.20.1 con Sodium, Lithium y más optimización",
+    "Brújula de manhunt, chat de voz y menú nuevo estilo dibujo animado"
+  ],
+  "ramGb": 4,
+  "keepLocal": [
+    "options.txt",
+    "servers.dat"
+  ],
+  "managedDirs": [
+    "mods"
+  ],
+  "generatedAt": "2026-11-08T17:29:39.300Z",
+  "files": [
+    {
+      "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
+      "sha1": "9f0110b60dc752ca093f2fc10a72d221b6dc8ac3",
+      "size": 348818,
+      "url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/iwYUrQJO/ImmediatelyFast-Fabric-1.5.5%2B1.20.4.jar"
+    },
+    {
+      "path": "mods/Jade-1.20-Fabric-11.13.3.jar",
+      "sha1": "cf46f3ddc2a5b9751750671da26b48b20e93836b",
+      "size": 553868,
+      "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/ahavHbAT/Jade-1.20-Fabric-11.13.3.jar"
+    },
+    {
+      "path": "mods/MouseTweaks-fabric-mc1.20-2.26.jar",
+      "sha1": "6a6b977e671b1ab625e740fc70fb5300c21bb841",
+      "size": 77943,
+      "url": "https://cdn.modrinth.com/data/aC3cM3Vq/versions/mjuG4AYd/MouseTweaks-fabric-mc1.20-2.26.jar"
+    },
+    {
+      "path": "mods/appleskin-fabric-mc1.20.1-2.5.2.jar",
+      "sha1": "f859bb13130788ae2dc2e76a9c80c89e4bbbef5f",
+      "size": 1097240,
+      "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/N5XeV21r/appleskin-fabric-mc1.20.1-2.5.2.jar"
+    },
+    {
+      "path": "mods/drippyloadingscreen_fabric_3.1.5_MC_1.20.1.jar",
+      "sha1": "94bddfb517fa4badec2803249fbfd68c21cb3eea",
+      "size": 277393,
+      "url": "https://cdn.modrinth.com/data/v3CYg2V9/versions/ewn2Ljq2/drippyloadingscreen_fabric_3.1.5_MC_1.20.1.jar"
+    },
+    {
+      "path": "mods/dynamic-fps-3.11.4+minecraft-1.20.0-fabric.jar",
+      "sha1": "38196ee5bcfb3605f9bb9e52a45916b250216313",
+      "size": 223261,
+      "url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/QwPQBhiQ/dynamic-fps-3.11.4%2Bminecraft-1.20.0-fabric.jar"
+    },
+    {
+      "path": "mods/entityculling-fabric-1.11.3-mc1.20.1.jar",
+      "sha1": "42d17e5455f5015fa9b9c918a9b599683ff83f1c",
+      "size": 1516696,
+      "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/xSrd3qsM/entityculling-fabric-1.11.3-mc1.20.1.jar"
+    },
+    {
+      "path": "mods/fabric-api-0.92.12+1.20.1.jar",
+      "sha1": "3e9cdd3e2f827ca9a259df9eb8e31949437b6bd4",
+      "size": 2137232,
+      "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar"
+    },
+    {
+      "path": "mods/fancymenu_fabric_3.9.14_MC_1.20.1.jar",
+      "sha1": "f426db60507a9060a6c8fe6d542b2f987fe4ef35",
+      "size": 26225066,
+      "url": "https://cdn.modrinth.com/data/Wq5SjeWM/versions/ywyEnvpm/fancymenu_fabric_3.9.14_MC_1.20.1.jar"
+    },
+    {
+      "path": "mods/ferritecore-6.0.1-fabric.jar",
+      "sha1": "8fa3b84fc5860dbc30fdf8cced02af68dffcf3fa",
+      "size": 125197,
+      "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/unerR5MN/ferritecore-6.0.1-fabric.jar"
+    },
+    {
+      "path": "mods/indium-1.0.36+mc1.20.1.jar",
+      "sha1": "d824614e7a173d273167969f427702f51846aca7",
+      "size": 105382,
+      "url": "https://cdn.modrinth.com/data/Orvt0mRa/versions/nQHYSjxO/indium-1.0.36%2Bmc1.20.1.jar"
+    },
+    {
+      "path": "mods/konkrete_fabric_1.8.1_MC_1.20.1.jar",
+      "sha1": "38d3201d95a08bdeb12a8cd3687c6d0b8f5e7f3d",
+      "size": 892067,
+      "url": "https://cdn.modrinth.com/data/J81TRJWm/versions/RlBGFlWp/konkrete_fabric_1.8.1_MC_1.20.1.jar"
+    },
+    {
+      "path": "mods/lambdynamiclights-4.4.0+1.20.1.jar",
+      "sha1": "eb50a56760e7b8ccbee5479cf31b55375434ae76",
+      "size": 1114373,
+      "url": "https://cdn.modrinth.com/data/yBW8D80W/versions/AQfTnYyJ/lambdynamiclights-4.4.0%2B1.20.1.jar"
+    },
+    {
+      "path": "mods/lithium-fabric-mc1.20.1-0.11.4.jar",
+      "sha1": "048227ed60a3005cf9fa55880dfe0cf20b0ba680",
+      "size": 691483,
+      "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/iEcXOkz4/lithium-fabric-mc1.20.1-0.11.4.jar"
+    },
+    {
+      "path": "mods/manhunt_pack-18.jar",
+      "sha1": "0bad36cd9aa7eca18b6b51c3209bea4fc4025af7",
+      "size": 165993,
+      "url": "https://cdn.modrinth.com/data/LfV3RCjF/versions/ASn01VQ7/manhunt_pack-18.jar"
+    },
+    {
+      "path": "mods/melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar",
+      "sha1": "15eeff0c0fd8b4734492915c656077592b2d9e67",
+      "size": 39696,
+      "url": "https://cdn.modrinth.com/data/CVT4pFB2/versions/2o0oW8Yv/melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar"
+    },
+    {
+      "path": "mods/modernfix-fabric-5.25.2+mc1.20.1.jar",
+      "sha1": "be03b9eb570c1e9df7593e68623f0fecbd039460",
+      "size": 545175,
+      "url": "https://cdn.modrinth.com/data/nmDcB62a/versions/rPmgLeZC/modernfix-fabric-5.25.2%2Bmc1.20.1.jar"
+    },
+    {
+      "path": "mods/modmenu-7.2.2.jar",
+      "sha1": "099c68feeb74887cbbbd8ce9a27c6123804a2c5a",
+      "size": 721366,
+      "url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/lEkperf6/modmenu-7.2.2.jar"
+    },
+    {
+      "path": "mods/reeses_sodium_options-1.7.2+mc1.20.1-build.101.jar",
+      "sha1": "206f1b01b99ac3df99ddd84ed96b466a8700412d",
+      "size": 77304,
+      "url": "https://cdn.modrinth.com/data/Bh37bMuy/versions/Rc9pkPug/reeses_sodium_options-1.7.2%2Bmc1.20.1-build.101.jar"
+    },
+    {
+      "path": "mods/sodium-extra-0.5.9+mc1.20.1.jar",
+      "sha1": "0f97ec3f395b223848a63573b1a46cbecf97f19f",
+      "size": 370701,
+      "url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/mDbF0LZT/sodium-extra-0.5.9%2Bmc1.20.1.jar"
+    },
+    {
+      "path": "mods/sodium-fabric-0.5.13+mc1.20.1.jar",
+      "sha1": "bcdbf37d9494e405cba210d7a80ed58e756297b5",
+      "size": 971552,
+      "url": "https://cdn.modrinth.com/data/AANobbMI/versions/OihdIimA/sodium-fabric-0.5.13%2Bmc1.20.1.jar"
+    },
+    {
+      "path": "mods/voicechat-fabric-1.20.1-2.6.22.jar",
+      "sha1": "389d1b23340cb3ef547b021cfd6378b1bb1bd22a",
+      "size": 5279173,
+      "url": "https://cdn.modrinth.com/data/9eGKb6K1/versions/u5T0ji6n/voicechat-fabric-1.20.1-2.6.22.jar"
+    },
+    {
+      "path": "config/fancymenu/assets/background.apng",
+      "sha1": "251b448b3ca07b0174c15499348bab682eaee56d",
+      "size": 1855087
+    },
+    {
+      "path": "config/fancymenu/assets/background.png",
+      "sha1": "a5ff7a7d1329c8c012c6407708994277a3da4c7f",
+      "size": 210196
+    },
+    {
+      "path": "config/fancymenu/assets/btn-hover.png",
+      "sha1": "f0150c2ceba249fad842f85993a4eaf6335ca4f5",
+      "size": 511
+    },
+    {
+      "path": "config/fancymenu/assets/btn-inactive.png",
+      "sha1": "39abdccbf0f0cf496c7fbeca0f708e3054a162e4",
+      "size": 482
+    },
+    {
+      "path": "config/fancymenu/assets/btn-play-hover.png",
+      "sha1": "2b23301a761de7129212f3a17c34de78ffd1fbed",
+      "size": 548
+    },
+    {
+      "path": "config/fancymenu/assets/btn-play.png",
+      "sha1": "fa74e124150c738f22985ac3d7834e0c35fb857e",
+      "size": 538
+    },
+    {
+      "path": "config/fancymenu/assets/btn.png",
+      "sha1": "d6701e964b256e630c4955724e0d5659523b507d",
+      "size": 509
+    },
+    {
+      "path": "config/fancymenu/assets/click.wav",
+      "sha1": "264319837511bf1602d55a9e8bd238bae4574e96",
+      "size": 4894
+    },
+    {
+      "path": "config/fancymenu/assets/glow.png",
+      "sha1": "422945d6ead1e1d065f90460b815b2c851691bf1",
+      "size": 31108
+    },
+    {
+      "path": "config/fancymenu/assets/hover.wav",
+      "sha1": "f85d019d937d2739c4484c180d715c4cd7c47fbb",
+      "size": 2690
+    },
+    {
+      "path": "config/fancymenu/assets/intro.apng",
+      "sha1": "0b91e295365b5542966859c6eb0e7b1dc8111829",
+      "size": 1710991
+    },
+    {
+      "path": "config/fancymenu/assets/island.png",
+      "sha1": "0d9010688b41ae0728afb322ef1540de09166c4b",
+      "size": 8445
+    },
+    {
+      "path": "config/fancymenu/assets/loading-bar-bg.png",
+      "sha1": "76232d77aff565b7a6a8c565ad5bb4863710355d",
+      "size": 354
+    },
+    {
+      "path": "config/fancymenu/assets/loading-bar.png",
+      "sha1": "3141c86f542f0fdd1319fd3403b9bd5f7ed2a720",
+      "size": 726
+    },
+    {
+      "path": "config/fancymenu/assets/logo.png",
+      "sha1": "94de0847f9f9e7c193e937fc2d876f78f4d5f15e",
+      "size": 83428
+    },
+    {
+      "path": "config/fancymenu/assets/slider-handle-hover.png",
+      "sha1": "6914126d68b501973351ab112fbcec99216fea9a",
+      "size": 393
+    },
+    {
+      "path": "config/fancymenu/assets/slider-handle.png",
+      "sha1": "743356e7512bec422d34978bc9a9d4885b2c13ba",
+      "size": 396
+    },
+    {
+      "path": "config/fancymenu/assets/splashes.txt",
+      "sha1": "b9bd24c7bba8064cc32b7f1bc0544b6de4479f2c",
+      "size": 149
+    },
+    {
+      "path": "config/fancymenu/customizablemenus.txt",
+      "sha1": "8f6af9e075be42cbe54d5bbd8f7c2483c756d241",
+      "size": 426
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_carga.txt",
+      "sha1": "68d89e0031569fa482ecc5f33e2f47a7f55ceacb",
+      "size": 4287
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_connect_screen.txt",
+      "sha1": "1044df25cebbe531a3fa2bad43f14b33d4687b6d",
+      "size": 1361
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_disconnected_screen.txt",
+      "sha1": "abf9b57d4c840f97697a4228cd22b154ab2bacf5",
+      "size": 1366
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_level_loading_screen.txt",
+      "sha1": "3605e991f4b694f2ac51719b7e621e3f505d4a25",
+      "size": 1367
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_menu.txt",
+      "sha1": "0284113d198f183e81ba93193deff47cc5fce44c",
+      "size": 22675
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",
+      "sha1": "f8f42895fba61f00ed36aca08c40a795b2402df2",
+      "size": 1362
+    },
+    {
+      "path": "config/fancymenu/customization/cachusafio_receiving_level_screen.txt",
+      "sha1": "053e1ca6ecd9ed7924652387011c2748643988da",
+      "size": 1369
+    }
+  ]
+}
