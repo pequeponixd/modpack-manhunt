@@ -2,15 +2,15 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "minecraft": "1.20.1",
   "loader": "fabric",
   "loaderVersion": "",
   "ramGb": 4,
   "accent": "#ff8828",
   "changelog": [
-    "Menú nuevo estilo evento: cielo espacial lleno de estrellas, explosión de vóxeles, logo de bloques con brújula y botones de colores",
-    "Skins y capas del Vestidor dentro del juego, y nombres protegidos con el PIN del launcher (Cachusafio Skins para Fabric)"
+    "Menú estilo evento arreglado: JUGAR, OPCIONES y SALIR en colores a la izquierda y la explosión a la derecha",
+    "El fondo llena la pantalla y la intro ya no se queda pegada"
   ],
   "externalUrls": {
     "mods/fabric-api-0.92.12+1.20.1.jar": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",

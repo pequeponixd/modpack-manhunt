@@ -9,13 +9,15 @@ sobre un emblema de brújula y botones de solo texto en colores.
 Crea en Modpack/: icon.png, logo.png, background.png
 y en Modpack/config/fancymenu/assets/: background.apng, intro.apng, txt-*.png (botones del menú),
 btn*.png (resto de botones del juego), barra de carga y sonidos.
-Después corre el make-menu del launcher: al ver txt-play.png arma el menú a la izquierda
-y el personaje a la derecha. Requiere Pillow.
+Después corre tools/make-menu.js del launcher: al ver txt-play.png arma el menú a la izquierda
+y deja la derecha para el fondo. Requiere Pillow.
 """
+import io
 import math
 import random
 import struct
 import sys
+import zlib
 import wave
 from pathlib import Path
 
@@ -321,10 +323,43 @@ def loading_bar(w=200, h=10, filled=True):
     return img
 
 
-def save_apng(path, frames, ms):
+def save_apng(path, frames, ms, plays=0):
+    """APNG con todos los cuadros completos. Pillow guarda recortada la parte que cambia y FancyMenu
+    estira ese recorte a toda la pantalla (se perdía el suelo). plays: 0 = en loop, 1 = una vez."""
     pal = frames[0].quantize(256)  # misma paleta en todos los cuadros: sin parpadeo de colores
     q = [f.quantize(palette=pal, dither=Image.Dither.NONE) for f in frames]
-    q[0].save(path, save_all=True, append_images=q[1:], duration=ms, loop=0, optimize=True)
+
+    def png_chunks(im):
+        buf = io.BytesIO()
+        im.save(buf, 'PNG')  # sin optimize: así la paleta queda igual en todos los cuadros
+        d, i, out = buf.getvalue(), 8, []
+        while i < len(d):
+            n = struct.unpack('>I', d[i:i + 4])[0]
+            out.append((d[i + 4:i + 8], d[i + 8:i + 8 + n]))
+            i += 12 + n
+        return out
+
+    def chunk(kind, data):
+        return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
+
+    w, h = q[0].size
+    first = png_chunks(q[0])
+    out = [b'\x89PNG\r\n\x1a\n', chunk(b'IHDR', first[0][1]), chunk(b'acTL', struct.pack('>II', len(q), plays))]
+    out += [chunk(k, d) for k, d in first[1:] if k not in (b'IDAT', b'IEND')]
+    seq = 0
+    for n, im in enumerate(q):
+        out.append(chunk(b'fcTL', struct.pack('>IIIIIHHBB', seq, w, h, 0, 0, ms, 1000, 0, 0)))
+        seq += 1
+        for k, d in (first if n == 0 else png_chunks(im)):
+            if k != b'IDAT':
+                continue
+            if n == 0:
+                out.append(chunk(b'IDAT', d))
+            else:
+                out.append(chunk(b'fdAT', struct.pack('>I', seq) + d))
+                seq += 1
+    out.append(chunk(b'IEND', b''))
+    Path(path).write_bytes(b''.join(out))
 
 
 def intro(path, frames=36, ms=60):
@@ -339,7 +374,7 @@ def intro(path, frames=36, ms=60):
         l.putalpha(l.getchannel('A').point(lambda v: int(v * p)))
         f.alpha_composite(l, ((W - l.width) // 2, (H - l.height) // 2 - 20))
         out.append(f.convert('RGB'))
-    save_apng(path, out, ms)
+    save_apng(path, out, ms, plays=1)  # una sola vez: en loop el juego se quedaba en la intro
 
 
 def blip(path, freqs, ms, vol):

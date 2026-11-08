@@ -2,7 +2,7 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "minecraft": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -13,8 +13,8 @@
   "logo": "logo.png",
   "accent": "#ff8828",
   "changelog": [
-    "Menú nuevo estilo evento: cielo espacial lleno de estrellas, explosión de vóxeles, logo de bloques con brújula y botones de colores",
-    "Skins y capas del Vestidor dentro del juego, y nombres protegidos con el PIN del launcher (Cachusafio Skins para Fabric)"
+    "Menú estilo evento arreglado: JUGAR, OPCIONES y SALIR en colores a la izquierda y la explosión a la derecha",
+    "El fondo llena la pantalla y la intro ya no se queda pegada"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -24,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T20:54:03.570Z",
+  "generatedAt": "2026-11-08T21:44:03.674Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -176,8 +176,8 @@
     },
     {
       "path": "config/fancymenu/assets/background.apng",
-      "sha1": "01d84995029bf9d5f0a5c6c7f5b8d66387d3ddbc",
-      "size": 1307820
+      "sha1": "fa0d77020d9ee91067bd8e8415a00161077b9e66",
+      "size": 1371044
     },
     {
       "path": "config/fancymenu/assets/background.png",
@@ -211,8 +211,8 @@
     },
     {
       "path": "config/fancymenu/assets/intro.apng",
-      "sha1": "099157cf8ae92715e9789b6fb34092d6d7655097",
-      "size": 2062925
+      "sha1": "a6f31feecdf2a6a005d47c0a0151426307c3304b",
+      "size": 2162198
     },
     {
       "path": "config/fancymenu/assets/loading-bar-bg.png",
@@ -301,8 +301,8 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_menu.txt",
-      "sha1": "054ce50605fc5db08b6db7747bcaccc56e487ddb",
-      "size": 20763
+      "sha1": "cf6ccf1edd08aa4c71100b71337df2fa96ecd7b6",
+      "size": 20823
     },
     {
       "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",

@@ -56,8 +56,9 @@ element {
   button_element_executable_block_identifier = 4995015c-a345-4fc4-af70-6c4ca187f85f-1762000000000
   [executable_action_instance:d2cca886-86c5-4145-a5cb-429720bfae0f-1762000000000][action_type:opengui] = join_multiplayer_screen
   [executable_block:4995015c-a345-4fc4-af70-6c4ca187f85f-1762000000000][type:generic] = [executables:d2cca886-86c5-4145-a5cb-429720bfae0f-1762000000000;]
-  backgroundnormal = [source:local]/config/fancymenu/assets/txt-play.png
-  backgroundhovered = [source:local]/config/fancymenu/assets/txt-play-hover.png
+  iconnormal = [source:local]/config/fancymenu/assets/txt-play.png
+  iconhovered = [source:local]/config/fancymenu/assets/txt-play-hover.png
+  transparent_background = true
   hoversound = [source:local]/config/fancymenu/assets/hover.wav
   description = Abre la lista de servidores
   clicksound = [source:local]/config/fancymenu/assets/click.wav
@@ -95,8 +96,9 @@ element {
   button_element_executable_block_identifier = 9f8fdac4-1249-4706-a869-8fd43276949b-1762000000000
   [executable_action_instance:7e032448-2d0a-4dee-afec-ba0b67a9fef3-1762000000000][action_type:opengui] = options_screen
   [executable_block:9f8fdac4-1249-4706-a869-8fd43276949b-1762000000000][type:generic] = [executables:7e032448-2d0a-4dee-afec-ba0b67a9fef3-1762000000000;]
-  backgroundnormal = [source:local]/config/fancymenu/assets/txt-options.png
-  backgroundhovered = [source:local]/config/fancymenu/assets/txt-options-hover.png
+  iconnormal = [source:local]/config/fancymenu/assets/txt-options.png
+  iconhovered = [source:local]/config/fancymenu/assets/txt-options-hover.png
+  transparent_background = true
   hoversound = [source:local]/config/fancymenu/assets/hover.wav
   description = Video, sonido, controles e idioma
   clicksound = [source:local]/config/fancymenu/assets/click.wav
@@ -134,8 +136,9 @@ element {
   button_element_executable_block_identifier = b9b0d6e0-5815-4a24-aec4-f4f3dba50832-1762000000000
   [executable_action_instance:bf2e1565-f40a-44fe-affd-41327d972c24-1762000000000][action_type:quitgame] = 
   [executable_block:b9b0d6e0-5815-4a24-aec4-f4f3dba50832-1762000000000][type:generic] = [executables:bf2e1565-f40a-44fe-affd-41327d972c24-1762000000000;]
-  backgroundnormal = [source:local]/config/fancymenu/assets/txt-quit.png
-  backgroundhovered = [source:local]/config/fancymenu/assets/txt-quit-hover.png
+  iconnormal = [source:local]/config/fancymenu/assets/txt-quit.png
+  iconhovered = [source:local]/config/fancymenu/assets/txt-quit-hover.png
+  transparent_background = true
   hoversound = [source:local]/config/fancymenu/assets/hover.wav
   description = Cierra el juego
   clicksound = [source:local]/config/fancymenu/assets/click.wav
