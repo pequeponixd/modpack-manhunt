@@ -2,20 +2,21 @@
 """
 Genera el arte del modpack Manhunt con estilo de "menú de evento": cielo espacial con nebulosa,
 una explosión gigante hecha de vóxeles, plataforma oscura con borde encendido, logo de bloques
-sobre un emblema de brújula y botones de solo texto en colores.
+sobre un emblema de brújula y botones pixel art.
 
     python3 tools/make-art.py Modpack
 
 Crea en Modpack/: icon.png, logo.png, background.png
-y en Modpack/config/fancymenu/assets/: background.apng, intro.apng, txt-*.png (botones del menú),
-btn*.png (resto de botones del juego), barra de carga y sonidos.
-Después corre el make-menu del launcher: al ver txt-play.png arma el menú a la izquierda
-y el personaje a la derecha. Requiere Pillow.
+y en Modpack/config/fancymenu/assets/: background.apng, intro.apng, btn*.png (botones),
+barra de carga y sonidos.
+Después corre tools/make-menu.js del launcher para armar el menú. Requiere Pillow.
 """
+import io
 import math
 import random
 import struct
 import sys
+import zlib
 import wave
 from pathlib import Path
 
@@ -30,11 +31,6 @@ FIRE = [(255, 236, 160), (255, 170, 60), (250, 110, 40), (210, 60, 30)]
 GOLD_TOP = (255, 236, 120)
 GOLD_BOT = (255, 140, 40)
 EXTRUDE = (150, 40, 30)
-BUTTONS = {  # texto y color de cada botón del menú (como los de un menú de evento)
-    'play': ('JUGAR', (255, 80, 96)),
-    'options': ('OPCIONES', (255, 220, 80)),
-    'quit': ('SALIR', (96, 255, 128)),
-}
 
 
 def mix(a, b, t):
@@ -281,25 +277,6 @@ def logo_img(cell=16):
     return img
 
 
-def text_button(text, color, hover=False, cell=4):
-    """Botón de solo texto: letras de bloques gruesas del color del botón con un halo suave."""
-    c, cols = cells(text)
-    pad = cell * 4
-    w, h = cols * cell + cell // 2 + pad * 2, 7 * cell + pad * 2
-    face = mix(color, (255, 255, 255), 0.45) if hover else color
-    letters = Image.new('RGBA', (w, h))
-    d = ImageDraw.Draw(letters)
-    for x0, y0, x1, y1 in bold(c, cell):
-        d.rectangle((pad + x0 + 1, pad + y0 + 2, pad + x1 + 1, pad + y1 + 2), fill=(*mix(color, INK, 0.7), 255))  # sombra
-    for x0, y0, x1, y1 in bold(c, cell):
-        d.rectangle((pad + x0, pad + y0, pad + x1, pad + y1), fill=(*face, 255))
-    halo = Image.new('RGBA', (w, h), (*color, 0))
-    halo.putalpha(letters.getchannel('A').filter(ImageFilter.GaussianBlur(cell * (2.2 if hover else 1.4))).point(lambda v: min(255, int(v * (1.4 if hover else 0.8)))))
-    halo.alpha_composite(letters)
-    return halo
-
-
-# ------------------------------------------------------------------ resto de la interfaz
 def ui_button(w, h, hover=False, inactive=False):
     """Botones del resto del juego (Opciones, Volver…): vidrio oscuro con borde naranja."""
     img = Image.new('RGBA', (w, h))
@@ -321,10 +298,43 @@ def loading_bar(w=200, h=10, filled=True):
     return img
 
 
-def save_apng(path, frames, ms):
+def save_apng(path, frames, ms, plays=0):
+    """APNG con todos los cuadros completos. Pillow guarda recortada la parte que cambia y FancyMenu
+    estira ese recorte a toda la pantalla (se perdía el suelo). plays: 0 = en loop, 1 = una vez."""
     pal = frames[0].quantize(256)  # misma paleta en todos los cuadros: sin parpadeo de colores
     q = [f.quantize(palette=pal, dither=Image.Dither.NONE) for f in frames]
-    q[0].save(path, save_all=True, append_images=q[1:], duration=ms, loop=0, optimize=True)
+
+    def png_chunks(im):
+        buf = io.BytesIO()
+        im.save(buf, 'PNG')  # sin optimize: así la paleta queda igual en todos los cuadros
+        d, i, out = buf.getvalue(), 8, []
+        while i < len(d):
+            n = struct.unpack('>I', d[i:i + 4])[0]
+            out.append((d[i + 4:i + 8], d[i + 8:i + 8 + n]))
+            i += 12 + n
+        return out
+
+    def chunk(kind, data):
+        return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
+
+    w, h = q[0].size
+    first = png_chunks(q[0])
+    out = [b'\x89PNG\r\n\x1a\n', chunk(b'IHDR', first[0][1]), chunk(b'acTL', struct.pack('>II', len(q), plays))]
+    out += [chunk(k, d) for k, d in first[1:] if k not in (b'IDAT', b'IEND')]
+    seq = 0
+    for n, im in enumerate(q):
+        out.append(chunk(b'fcTL', struct.pack('>IIIIIHHBB', seq, w, h, 0, 0, ms, 1000, 0, 0)))
+        seq += 1
+        for k, d in (first if n == 0 else png_chunks(im)):
+            if k != b'IDAT':
+                continue
+            if n == 0:
+                out.append(chunk(b'IDAT', d))
+            else:
+                out.append(chunk(b'fdAT', struct.pack('>I', seq) + d))
+                seq += 1
+    out.append(chunk(b'IEND', b''))
+    Path(path).write_bytes(b''.join(out))
 
 
 def intro(path, frames=36, ms=60):
@@ -339,7 +349,7 @@ def intro(path, frames=36, ms=60):
         l.putalpha(l.getchannel('A').point(lambda v: int(v * p)))
         f.alpha_composite(l, ((W - l.width) // 2, (H - l.height) // 2 - 20))
         out.append(f.convert('RGB'))
-    save_apng(path, out, ms)
+    save_apng(path, out, ms, plays=1)  # una sola vez: en loop el juego se quedaba en la intro
 
 
 def blip(path, freqs, ms, vol):
@@ -363,16 +373,14 @@ def main():
     assets = pack / 'config' / 'fancymenu' / 'assets'
     assets.mkdir(parents=True, exist_ok=True)
     # texturas de estilos anteriores que este menú ya no usa
-    for old in ('island.png', 'glow.png', 'btn-play.png', 'btn-play-hover.png', 'txt-singleplayer.png', 'txt-singleplayer-hover.png'):
+    for old in ('island.png', 'glow.png', 'btn-play.png', 'btn-play-hover.png', 'txt-singleplayer.png', 'txt-singleplayer-hover.png',
+                *(f'txt-{n}{h}.png' for n in ('play', 'options', 'quit') for h in ('', '-hover'))):
         (assets / old).unlink(missing_ok=True)
     emblem(124).resize((256, 256), Image.LANCZOS).save(pack / 'icon.png')
     logo_img().save(pack / 'logo.png')
     scene(1920, 1080).save(pack / 'background.png', optimize=True)
     save_apng(assets / 'background.apng', [scene(960, 540, i / 24) for i in range(24)], 110)
     intro(assets / 'intro.apng')
-    for name, (text, color) in BUTTONS.items():
-        text_button(text, color).save(assets / f'txt-{name}.png')
-        text_button(text, color, hover=True).save(assets / f'txt-{name}-hover.png')
     ui_button(98, 20).save(assets / 'btn.png')
     ui_button(98, 20, hover=True).save(assets / 'btn-hover.png')
     ui_button(98, 20, inactive=True).save(assets / 'btn-inactive.png')
