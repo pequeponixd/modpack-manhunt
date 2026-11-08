@@ -196,6 +196,41 @@ element {
 }
 
 element {
+  button_element_executable_block_identifier = ded4ef0c-a9ad-426e-a15f-08d83db4261c-1762000000000
+  [executable_action_instance:bf695adc-0cd8-4a22-aec2-4350bc2b59a9-1762000000000][action_type:opengui] = select_world_screen
+  [executable_block:ded4ef0c-a9ad-426e-a15f-08d83db4261c-1762000000000][type:generic] = [executables:bf695adc-0cd8-4a22-aec2-4350bc2b59a9-1762000000000;]
+  backgroundnormal = [source:local]/config/fancymenu/assets/btn.png
+  backgroundhovered = [source:local]/config/fancymenu/assets/btn-hover.png
+  hoversound = [source:local]/config/fancymenu/assets/hover.wav
+  description = Tus mundos (también para abrir en LAN)
+  clicksound = [source:local]/config/fancymenu/assets/click.wav
+  restartbackgroundanimations = true
+  loopbackgroundanimations = true
+  nine_slice_custom_background = false
+  nine_slice_border_x = 5
+  nine_slice_border_y = 5
+  navigatable = true
+  label = Un jugador
+  hoverlabel = » Un jugador «
+  element_type = custom_button
+  instance_identifier = c94253f1-395c-40e5-a0b9-cd76e9848972-1762000000000
+  appearance_delay = no_delay
+  appearance_delay_seconds = 1.0
+  fade_in = false
+  fade_in_speed = 1.0
+  anchor_point = mid-centered
+  x = -100
+  y = 6
+  width = 98
+  height = 20
+  stretch_x = false
+  stretch_y = false
+  stay_on_screen = true
+  element_loading_requirement_container_identifier = fb91988b-ccd8-45b3-add6-3a5e8e988bcf-1762000000000
+  [loading_requirement_container_meta:fb91988b-ccd8-45b3-add6-3a5e8e988bcf-1762000000000] = [groups:][instances:]
+}
+
+element {
   button_element_executable_block_identifier = 9f8fdac4-1249-4706-a869-8fd43276949b-1762000000000
   [executable_action_instance:7e032448-2d0a-4dee-afec-ba0b67a9fef3-1762000000000][action_type:opengui] = options_screen
   [executable_block:9f8fdac4-1249-4706-a869-8fd43276949b-1762000000000][type:generic] = [executables:7e032448-2d0a-4dee-afec-ba0b67a9fef3-1762000000000;]
@@ -219,7 +254,7 @@ element {
   fade_in = false
   fade_in_speed = 1.0
   anchor_point = mid-centered
-  x = -100
+  x = 2
   y = 6
   width = 98
   height = 20
@@ -254,8 +289,8 @@ element {
   fade_in = false
   fade_in_speed = 1.0
   anchor_point = mid-centered
-  x = 2
-  y = 6
+  x = -49
+  y = 30
   width = 98
   height = 20
   stretch_x = false

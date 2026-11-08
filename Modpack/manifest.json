@@ -2,7 +2,7 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "minecraft": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -13,7 +13,8 @@
   "logo": "logo.png",
   "accent": "#ff8828",
   "changelog": [
-    "Multiworld: varios mundos en el mismo servidor (/mw create, /mw tp)"
+    "Menú: botón Un jugador, intro animada, botones con el estilo del pack y sin la barra del editor de FancyMenu",
+    "Pantalla de carga temprana con el fondo y logo de Manhunt"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -23,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T19:02:54.513Z",
+  "generatedAt": "2026-11-08T20:15:56.465Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -164,6 +165,11 @@
       "url": "https://cdn.modrinth.com/data/9eGKb6K1/versions/u5T0ji6n/voicechat-fabric-1.20.1-2.6.22.jar"
     },
     {
+      "path": "config/drippyloadingscreen/options.txt",
+      "sha1": "f856821df46d3281d867b410b98843e457ce2304",
+      "size": 2436
+    },
+    {
       "path": "config/fancymenu/assets/background.apng",
       "sha1": "251b448b3ca07b0174c15499348bab682eaee56d",
       "size": 1855087
@@ -280,8 +286,8 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_menu.txt",
-      "sha1": "0284113d198f183e81ba93193deff47cc5fce44c",
-      "size": 22675
+      "sha1": "baf4a39a632f623068a9141927e170771abd295d",
+      "size": 24195
     },
     {
       "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",
@@ -292,6 +298,11 @@
       "path": "config/fancymenu/customization/cachusafio_receiving_level_screen.txt",
       "sha1": "053e1ca6ecd9ed7924652387011c2748643988da",
       "size": 1369
+    },
+    {
+      "path": "config/fancymenu/options.txt",
+      "sha1": "62b5552b3ba0a750e2b5067d593e6d6578544f1d",
+      "size": 4857
     }
   ]
 }
