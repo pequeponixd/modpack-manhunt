@@ -2,7 +2,7 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "minecraft": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -13,8 +13,7 @@
   "logo": "logo.png",
   "accent": "#ff8828",
   "changelog": [
-    "Primera versión: Fabric 1.20.1 con Sodium, Lithium y más optimización",
-    "Brújula de manhunt, chat de voz y menú nuevo estilo dibujo animado"
+    "Multiworld: varios mundos en el mismo servidor (/mw create, /mw tp)"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -24,7 +23,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T17:29:39.300Z",
+  "generatedAt": "2026-11-08T19:02:54.513Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -133,6 +132,12 @@
       "sha1": "099c68feeb74887cbbbd8ce9a27c6123804a2c5a",
       "size": 721366,
       "url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/lEkperf6/modmenu-7.2.2.jar"
+    },
+    {
+      "path": "mods/multiworld-fabric-1.13.1+mc1.20.1.jar",
+      "sha1": "2334988bb0684f98ded0c7f32903e910664118a2",
+      "size": 150121,
+      "url": "https://cdn.modrinth.com/data/fgvoNDL1/versions/TvR5QBt0/Multiworld-Fabric-1.20.1.jar"
     },
     {
       "path": "mods/reeses_sodium_options-1.7.2+mc1.20.1-build.101.jar",

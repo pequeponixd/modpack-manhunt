@@ -2,15 +2,14 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "minecraft": "1.20.1",
   "loader": "fabric",
   "loaderVersion": "",
   "ramGb": 4,
   "accent": "#ff8828",
   "changelog": [
-    "Primera versión: Fabric 1.20.1 con Sodium, Lithium y más optimización",
-    "Brújula de manhunt, chat de voz y menú nuevo estilo dibujo animado"
+    "Multiworld: varios mundos en el mismo servidor (/mw create, /mw tp)"
   ],
   "externalUrls": {
     "mods/fabric-api-0.92.12+1.20.1.jar": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",
@@ -34,6 +33,7 @@
     "mods/appleskin-fabric-mc1.20.1-2.5.2.jar": "https://cdn.modrinth.com/data/EsAfCjCV/versions/N5XeV21r/appleskin-fabric-mc1.20.1-2.5.2.jar",
     "mods/Jade-1.20-Fabric-11.13.3.jar": "https://cdn.modrinth.com/data/nvQzSEkH/versions/ahavHbAT/Jade-1.20-Fabric-11.13.3.jar",
     "mods/MouseTweaks-fabric-mc1.20-2.26.jar": "https://cdn.modrinth.com/data/aC3cM3Vq/versions/mjuG4AYd/MouseTweaks-fabric-mc1.20-2.26.jar",
-    "mods/modmenu-7.2.2.jar": "https://cdn.modrinth.com/data/mOgUt4GM/versions/lEkperf6/modmenu-7.2.2.jar"
+    "mods/modmenu-7.2.2.jar": "https://cdn.modrinth.com/data/mOgUt4GM/versions/lEkperf6/modmenu-7.2.2.jar",
+    "mods/multiworld-fabric-1.13.1+mc1.20.1.jar": "https://cdn.modrinth.com/data/fgvoNDL1/versions/TvR5QBt0/Multiworld-Fabric-1.20.1.jar"
   }
 }
