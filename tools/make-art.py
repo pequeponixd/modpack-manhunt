@@ -78,14 +78,30 @@ def sky(W, H, seed=2):
 
 
 def stars(img, t, seed=4):
+    """Cielo bien estrellado: polvo fino, estrellas de colores y algunas grandes con destello en cruz."""
     W, H = img.size
-    d = ImageDraw.Draw(img)
+    u = max(1, W // 960)  # 1 px a 960 de ancho, 2 px a 1920
+    lay = Image.new('RGB', (W, H))
+    d = ImageDraw.Draw(lay)
     rnd = random.Random(seed)
-    for i in range(int(W * H / 2500)):
-        x, y = int(rnd.random() * W), int(rnd.random() * H * 0.85)
-        b = 0.4 + 0.6 * abs(math.sin(rnd.random() * 9 + t * math.tau * (1 + i % 3)))  # titilan
-        s = max(1, W // 960) * (2 if rnd.random() < 0.08 else 1)
-        d.rectangle((x, y, x + s - 1, y + s - 1), fill=mix((40, 30, 70), (255, 245, 230), b))
+    tints = [(255, 245, 230), (200, 220, 255), (255, 220, 200), (230, 200, 255)]
+    for i in range(int(W * H / 700)):
+        x, y = int(rnd.random() * W), int(rnd.random() * H * 0.88)
+        b = 0.35 + 0.65 * abs(math.sin(rnd.random() * 9 + t * math.tau * (1 + i % 3)))  # titilan
+        s = u * (2 if rnd.random() < 0.1 else 1)
+        d.rectangle((x, y, x + s - 1, y + s - 1), fill=mix((30, 20, 50), rnd.choice(tints), b * rnd.uniform(0.5, 1)))
+    big = Image.new('RGB', (W, H))
+    db = ImageDraw.Draw(big)
+    for i in range(int(W * H / 40000)):
+        x, y = int(rnd.uniform(0.02, 0.98) * W), int(rnd.uniform(0.02, 0.8) * H)
+        b = 0.6 + 0.4 * abs(math.sin(rnd.random() * 9 + t * math.tau * (1 + i % 2)))
+        c = mix((0, 0, 0), rnd.choice(tints), b)
+        arm = u * rnd.randint(3, 6)
+        db.rectangle((x - u, y - u, x + u, y + u), fill=c)
+        db.rectangle((x - arm, y, x + arm, y + u - 1), fill=mix((0, 0, 0), c, 0.7))  # destello en cruz
+        db.rectangle((x, y - arm, x + u - 1, y + arm), fill=mix((0, 0, 0), c, 0.7))
+    lay = ImageChops.screen(lay, ImageChops.screen(big, glow_of(big, u * 3, 1.8)))
+    img.paste(ImageChops.screen(img, lay))
 
 
 def explosion(W, H, t):

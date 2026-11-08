@@ -208,41 +208,6 @@ element {
   [loading_requirement_container_meta:099d8bd7-c668-448e-ad8a-db0476dbd79c-1762000000000] = [groups:][instances:]
 }
 
-element {
-  copy_client_player = true
-  auto_skin = true
-  auto_cape = true
-  slim = false
-  parrot = false
-  parrot_left_shoulder = false
-  is_baby = false
-  body_movement = true
-  player_pose = standing
-  showname = true
-  head_follows_mouse = true
-  body_follows_mouse = true
-  element_type = player_entity_v2
-  advanced_posx = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiwidth"}*60/100","decimal":"false"}}
-  advanced_posy = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*60/135","decimal":"false"}}
-  advanced_width = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*26/135","decimal":"false"}}
-  advanced_height = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*62/135","decimal":"false"}}
-  instance_identifier = 7050e0cd-a5d5-4aa0-a933-cd73641a7b5d-1762000000000
-  appearance_delay = no_delay
-  appearance_delay_seconds = 1.0
-  fade_in = false
-  fade_in_speed = 1.0
-  anchor_point = top-left
-  x = 0
-  y = 0
-  width = 40
-  height = 100
-  stretch_x = false
-  stretch_y = false
-  stay_on_screen = true
-  element_loading_requirement_container_identifier = f4639e54-a1ac-42dd-acec-2f6816b14198-1762000000000
-  [loading_requirement_container_meta:f4639e54-a1ac-42dd-acec-2f6816b14198-1762000000000] = [groups:][instances:]
-}
-
 vanilla_button {
   button_element_executable_block_identifier = e51e9534-caac-4ac9-a5ab-3a9a2ac24533-1762000000000
   [executable_block:e51e9534-caac-4ac9-a5ab-3a9a2ac24533-1762000000000][type:generic] = [executables:]

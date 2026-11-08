@@ -24,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T20:29:28.075Z",
+  "generatedAt": "2026-11-08T20:32:24.468Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -171,13 +171,13 @@
     },
     {
       "path": "config/fancymenu/assets/background.apng",
-      "sha1": "071f94a86558eb72ac74330f6128aa0b92b03289",
-      "size": 1233410
+      "sha1": "01d84995029bf9d5f0a5c6c7f5b8d66387d3ddbc",
+      "size": 1307820
     },
     {
       "path": "config/fancymenu/assets/background.png",
-      "sha1": "de3bad1c8dafd21b0280b149b8ef4db540f646b6",
-      "size": 590502
+      "sha1": "1edc4bb000f0dbd6f1c02959edd2d9d5a9060c55",
+      "size": 670734
     },
     {
       "path": "config/fancymenu/assets/btn-hover.png",
@@ -206,8 +206,8 @@
     },
     {
       "path": "config/fancymenu/assets/intro.apng",
-      "sha1": "b332b071da49afffe95f78ccdf4f0c460d7ca3c3",
-      "size": 1964994
+      "sha1": "099157cf8ae92715e9789b6fb34092d6d7655097",
+      "size": 2062925
     },
     {
       "path": "config/fancymenu/assets/loading-bar-bg.png",
@@ -306,8 +306,8 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_menu.txt",
-      "sha1": "b3409713831bcc7fb6f472a45697d4228feba72e",
-      "size": 24123
+      "sha1": "a0081615417651a9240dfc073e447bff00a4a978",
+      "size": 22795
     },
     {
       "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",
