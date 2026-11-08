@@ -40,7 +40,7 @@ element {
   x = -120
   y = -40
   width = 240
-  height = 68
+  height = 64
   stretch_x = false
   stretch_y = false
   stay_on_screen = true

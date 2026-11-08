@@ -2,15 +2,15 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "minecraft": "1.20.1",
   "loader": "fabric",
   "loaderVersion": "",
   "ramGb": 4,
   "accent": "#ff8828",
   "changelog": [
-    "Menú: botón Un jugador, intro animada, botones con el estilo del pack y sin la barra del editor de FancyMenu",
-    "Pantalla de carga temprana con el fondo y logo de Manhunt"
+    "Menú nuevo estilo Minecraft: paisaje de bloques al atardecer, portal al Nether animado y letras de piedra",
+    "Botón Un jugador e intro animada"
   ],
   "externalUrls": {
     "mods/fabric-api-0.92.12+1.20.1.jar": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",

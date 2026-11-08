@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Genera el arte estilo dibujo animado del modpack Manhunt (contornos gruesos, colores planos).
+Genera el arte estilo Minecraft del modpack Manhunt (pixel art con bloques).
 
     python3 tools/make-art.py Modpack
 
 Crea en Modpack/: icon.png (brújula), logo.png, background.png
 y en Modpack/config/fancymenu/assets/: background.apng, intro.apng, island.png, glow.png,
 botones, barra de carga y sonidos. Después corre el make-menu del launcher. Requiere Pillow.
+
+Todo se dibuja en una cuadrícula chica (480x270, bloques de 8 px) y se agranda sin suavizar.
 """
 import math
 import random
@@ -15,241 +17,346 @@ import sys
 import wave
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter
 
-FONT = Path(__file__).with_name('LuckiestGuy-Regular.ttf')
-INK = (34, 22, 46)
-SKY_TOP = (58, 64, 150)
-SKY_MID = (238, 112, 140)
-SKY_LOW = (255, 196, 110)
-SUN = (255, 222, 92)
-HILL_FAR = (150, 96, 170)
-HILL_MID = (64, 140, 96)
-HILL_NEAR = (110, 196, 92)
-PINE = (36, 102, 78)
-PORTAL = (70, 34, 110)
-PORTAL_IN = (186, 92, 255)
-ORANGE = (255, 136, 40)
-RED = (226, 52, 52)
-WHITE = (255, 250, 240)
-SS = 2  # todo se dibuja al doble y se reduce: bordes suaves de dibujo animado
+W, H = 480, 270
+B = 8  # tamaño de un bloque en la cuadrícula
+INK = (20, 16, 22)
+GRASS = (98, 160, 58)
+DIRT = (128, 88, 56)
+STONE = (122, 122, 126)
+OBSIDIAN = (30, 20, 44)
+LOG = (88, 62, 38)
+LEAVES = (46, 92, 52)
+PORTAL = (150, 60, 230)
+WHITE = (250, 248, 240)
+GOLD = (236, 190, 60)
+RED = (210, 44, 44)
+SKY = [(30, 34, 82), (62, 52, 120), (128, 70, 140), (214, 98, 110), (246, 150, 92), (252, 200, 120)]
 
 
 def mix(a, b, t):
     return tuple(round(a[i] + (b[i] - a[i]) * t) for i in range(3))
 
 
-def shrink(img, size):
-    return img.resize(size, Image.LANCZOS)
+def jitter(c, rnd, amount=12):
+    d = rnd.randint(-amount, amount)
+    return tuple(max(0, min(255, v + d)) for v in c)
 
 
-def blob(d, pts, fill, w):
-    """Polígono con contorno grueso."""
-    d.polygon(pts, fill=fill, outline=INK, width=w)
+def up(img, k):
+    return img.resize((img.width * k, img.height * k), Image.NEAREST)
 
 
-def circles(d, cs, fill, w):
-    """Varias esferas unidas con un solo contorno (nubes, arbustos)."""
-    for x, y, r in cs:
-        d.ellipse((x - r - w, y - r - w, x + r + w, y + r + w), fill=INK)
-    for x, y, r in cs:
-        d.ellipse((x - r, y - r, x + r, y + r), fill=fill)
+# --------------------------------------------------------- texturas de 1 bloque
+def texture(kind, seed=0, tint=None):
+    rnd = random.Random(f'{kind}:{seed}')  # semilla de texto: mismo resultado en cada ejecución
+    t = Image.new('RGBA', (B, B))
+    px = t.load()
+    for y in range(B):
+        for x in range(B):
+            if kind == 'grass':
+                edge = 2 + (rnd.random() < 0.3)
+                c = jitter(GRASS, rnd) if y < edge else jitter(DIRT, rnd, 14)
+            elif kind == 'dirt':
+                c = jitter(DIRT, rnd, 14)
+            elif kind == 'stone':
+                c = jitter(STONE, rnd, 10) if rnd.random() > 0.1 else jitter(mix(STONE, INK, 0.3), rnd, 6)
+            elif kind == 'obsidian':
+                c = jitter(OBSIDIAN, rnd, 6) if rnd.random() > 0.12 else (80, 50, 120)
+            elif kind == 'log':
+                c = jitter(mix(LOG, INK, 0.35) if x % 4 == 0 else LOG, rnd, 8)
+            elif kind == 'leaves':
+                c = jitter(LEAVES, rnd, 16) if rnd.random() > 0.15 else mix(LEAVES, INK, 0.45)
+            if tint:
+                c = mix(c, tint[0], tint[1])
+            px[x, y] = (*c, 255)
+    return t
 
 
-def hill(W, H, base, amp, freq, phase):
-    pts = [(0, H)]
-    for i in range(0, 101):
-        x = W * i / 100
-        pts.append((x, base + amp * math.sin(freq * i / 100 * math.tau + phase)))
-    return pts + [(W, H)]
-
-
-def pine(d, x, y, h, w):
-    d.rectangle((x - h * 0.06, y - h * 0.15, x + h * 0.06, y), fill=(110, 70, 50), outline=INK, width=w)
-    for k in range(3):
-        top = y - h * (0.45 + 0.27 * k)
-        half = h * (0.32 - 0.07 * k)
-        blob(d, [(x, top - h * 0.28), (x - half, top + h * 0.12), (x + half, top + h * 0.12)], PINE, w)
-
-
-def scene(W, H, t=0.0):
-    """Atardecer con colinas, pinos y un portal al Nether. t en [0,1) anima nubes, sol y portal."""
-    w, h = W * SS, H * SS
-    lw = max(2, round(h / 180))  # grosor del contorno
-    img = Image.new('RGB', (w, h))
-    d = ImageDraw.Draw(img)
+def portal_tex(t, w, h):
+    """Remolino violeta animado: ondas que bajan. t en [0,1)."""
+    img = Image.new('RGBA', (w, h))
+    px = img.load()
     for y in range(h):
-        k = y / h
-        c = mix(SKY_TOP, SKY_MID, k / 0.55) if k < 0.55 else mix(SKY_MID, SKY_LOW, (k - 0.55) / 0.45)
-        d.line((0, y, w, y), fill=c)
-    # sol con rayos que giran
-    sx, sy, sr = w * 0.73, h * 0.5, h * 0.13
-    for i in range(12):
-        a = i / 12 * math.tau + t * math.tau / 12
-        a2 = a + 0.12
-        r1, r2 = sr * 1.25, sr * 1.75
-        d.polygon([(sx + r1 * math.cos(a), sy + r1 * math.sin(a)), (sx + r2 * math.cos(a + 0.06), sy + r2 * math.sin(a + 0.06)),
-                   (sx + r1 * math.cos(a2), sy + r1 * math.sin(a2))], fill=mix(SUN, SKY_LOW, 0.4))
-    d.ellipse((sx - sr, sy - sr, sx + sr, sy + sr), fill=SUN, outline=INK, width=lw)
-    # nubes que avanzan y dan la vuelta
-    for i, (cx, cy, s) in enumerate([(0.12, 0.18, 1.0), (0.45, 0.1, 0.7), (0.8, 0.22, 0.85), (1.1, 0.33, 0.6)]):
-        x = ((cx + t * (0.25 if i % 2 else 0.5)) % 1.3 - 0.15) * w
-        y, r = cy * h, s * h * 0.05
-        circles(d, [(x, y, r), (x + r * 1.2, y - r * 0.5, r * 1.3), (x + r * 2.5, y, r * 1.05), (x + r * 1.2, y + r * 0.3, r * 1.1)], WHITE, lw)
-    blob(d, hill(w, h, h * 0.62, h * 0.05, 1.5, 0.4), HILL_FAR, lw)
-    # portal al Nether en la colina lejana (la meta del corredor)
-    px, py, pw, ph = w * 0.16, h * 0.66, h * 0.16, h * 0.24
-    d.rectangle((px, py - ph, px + pw, py), fill=PORTAL, outline=INK, width=lw)
-    f = pw * 0.18
-    inner = Image.new('RGB', (round(pw - 2 * f), round(ph - 2 * f)), PORTAL_IN)
-    di = ImageDraw.Draw(inner)
-    for k in range(-6, 12):
-        y0 = (k / 6 + t) % 2 * inner.height - inner.height * 0.5
-        di.line((0, y0, inner.width, y0 + inner.width * 0.6), fill=mix(PORTAL_IN, WHITE, 0.35), width=max(2, inner.width // 12))
-    img.paste(inner, (round(px + f), round(py - ph + f)))
-    d.rectangle((px + f, py - ph + f, px + pw - f, py - f), outline=INK, width=lw)
-    blob(d, hill(w, h, h * 0.72, h * 0.04, 2.2, 2.0), HILL_MID, lw)
-    rnd = random.Random(4)
-    for i in range(16):
-        x = w * (i + rnd.random() * 0.6) / 16
-        if 0.35 < x / w < 0.65:  # centro libre para el personaje y los botones
-            continue
-        base = h * 0.72 + h * 0.04 * math.sin(2.2 * x / w * math.tau + 2.0) + h * 0.02
-        pine(d, x, base, h * (0.13 + rnd.random() * 0.06), lw)
-    blob(d, hill(w, h, h * 0.86, h * 0.03, 1.2, 4.0), HILL_NEAR, lw)
-    for x in (0.04, 0.3, 0.7, 0.95):
-        bx, by, r = x * w, h * 0.88, h * 0.035
-        circles(d, [(bx, by, r), (bx + r, by - r * 0.5, r * 1.1), (bx + r * 2, by, r)], mix(HILL_NEAR, PINE, 0.35), lw)
-    return shrink(img, (W, H))
+        for x in range(w):
+            v = math.sin((x * 0.5 + y * 0.9) - t * math.tau) + math.sin((x * 0.9 - y * 0.4) + t * math.tau * 2)
+            px[x, y] = (*mix(PORTAL, (220, 160, 255) if v > 0.9 else (90, 30, 160), min(1, abs(v) / 2)), 255)
+    return img
+
+
+# ------------------------------------------------------------------ paisaje
+def heights(n, base, amp, seed, step=2):
+    rnd = random.Random(seed)
+    h, out = base, []
+    for i in range(n):
+        if i % step == 0:
+            h = max(base - amp, min(base + amp, h + rnd.choice((-1, 0, 0, 1))))
+        out.append(h)
+    return out
+
+
+def spruce(layer, x, ground, rnd, tint=None):
+    """Pino de bloques: tronco y capas de hojas cada vez más angostas."""
+    trunk = rnd.randint(2, 3)
+    for k in range(trunk):
+        layer.alpha_composite(texture('log', x + k, tint), (x * B, (ground - 1 - k) * B))
+    # copa de abajo hacia arriba: ancha, angosta, ancha, angosta… y punta
+    widths = rnd.choice(([2, 1, 2, 1, 1, 0], [3, 2, 1, 2, 1, 0], [2, 1, 1, 0]))
+    for k, wd in enumerate(widths):
+        y = ground - trunk - k
+        for dx in range(-wd, wd + 1):
+            layer.alpha_composite(texture('leaves', x * 7 + dx + k * 3, tint), ((x + dx) * B, (y - 1) * B))
+
+
+PORTAL_COL, PORTAL_W, PORTAL_H = 45, 4, 5  # columna (en bloques), ancho y alto del marco
+
+
+def terrain():
+    """Capas de bloques encima del cielo. Devuelve (capa RGBA, rect del hueco del portal en px)."""
+    cols, rows = W // B, H // B + 1
+    layer = Image.new('RGBA', (W, H))
+    # montañas lejanas, desteñidas hacia el color del cielo
+    far = heights(cols, rows - 13, 3, 3, step=2)
+    haze = (SKY[1], 0.6)
+    for x, h in enumerate(far):
+        for y in range(h, rows):
+            layer.alpha_composite(texture('stone' if y > h else 'grass', x * 31 + y, haze), (x * B, y * B))
+    # colinas del medio con pinos y el portal
+    mid = heights(cols, rows - 8, 2, 8, step=3)
+    mid[PORTAL_COL - 1:PORTAL_COL + PORTAL_W + 1] = [mid[PORTAL_COL]] * (PORTAL_W + 2)  # piso plano bajo el portal
+    rnd = random.Random(5)
+    for x, h in enumerate(mid):
+        for y in range(h, rows):
+            layer.alpha_composite(texture('grass' if y == h else 'dirt' if y < h + 3 else 'stone', x * 13 + y), (x * B, y * B))
+    for x in (3, 7, 12, 17, 41, 53, 57):  # el centro queda libre para el personaje y los botones
+        spruce(layer, x, mid[x], rnd)
+    g = mid[PORTAL_COL]
+    for i in range(PORTAL_W):
+        for j in range(PORTAL_H):
+            if i in (0, PORTAL_W - 1) or j in (0, PORTAL_H - 1):
+                layer.alpha_composite(texture('obsidian', i * 5 + j), ((PORTAL_COL + i) * B, (g - 1 - j) * B))
+    hole = ((PORTAL_COL + 1) * B, (g - PORTAL_H + 1) * B, (PORTAL_COL + PORTAL_W - 1) * B, (g - 1) * B)
+    layer.paste((0, 0, 0, 0), hole)  # hueco transparente: ahí se dibuja el portal animado
+    # primer plano: una fila de bloques más cerca, centro despejado para el personaje
+    near = heights(cols, rows - 4, 1, 21, step=4)
+    for x, h in enumerate(near):
+        for y in range(h, rows):
+            layer.alpha_composite(texture('grass' if y == h else 'dirt', x * 17 + y + 99, (INK, 0.15)), (x * B, y * B))
+    return layer, hole
+
+
+def sky():
+    img = Image.new('RGB', (W, H))
+    d = ImageDraw.Draw(img)
+    band = H * 0.75 / len(SKY)
+    for y in range(H):
+        k = min(len(SKY) - 1, int(y / band))
+        frac = y / band - k
+        # entre franjas, tramado de 2 colores como en los juegos viejos
+        c = SKY[min(len(SKY) - 1, k + 1)] if frac > 0.75 and k + 1 < len(SKY) else SKY[k]
+        d.line((0, y, W, y), fill=c)
+        if 0.75 < frac < 0.88 and k + 1 < len(SKY):
+            for x in range(y % 2, W, 2):
+                img.putpixel((x, y), SKY[k])
+    rnd = random.Random(1)
+    for _ in range(60):
+        x, y = rnd.randrange(W), rnd.randrange(int(H * 0.3))
+        img.putpixel((x, y), WHITE if rnd.random() < 0.3 else (170, 170, 210))
+    # sol cuadrado bajando en el horizonte
+    sx, sy, s = int(W * 0.88), int(H * 0.5), 22
+    d.rectangle((sx - s // 2 - 4, sy - s // 2 - 4, sx + s // 2 + 4, sy + s // 2 + 4), fill=mix(SKY[4], (255, 230, 140), 0.5))
+    d.rectangle((sx - s // 2, sy - s // 2, sx + s // 2, sy + s // 2), fill=(255, 236, 150))
+    return img
+
+
+CLOUDS = [(10, 26, 48, 8), (120, 14, 64, 10), (220, 40, 40, 6), (330, 22, 56, 8), (420, 48, 32, 6)]
+
+
+def clouds(img, t):
+    """Nubes planas de bloques que se mueven a la izquierda y dan la vuelta."""
+    over = Image.new('RGBA', (W, H))
+    d = ImageDraw.Draw(over)
+    for x0, y, w, h in CLOUDS:
+        x = round((x0 - t * W) % (W + 80)) - 80
+        d.rectangle((x, y, x + w, y + h), fill=(255, 255, 255, 215))
+        d.rectangle((x + 8, y - 4, x + w - 12, y), fill=(255, 255, 255, 215))
+        d.rectangle((x, y + h - 2, x + w, y + h), fill=(220, 210, 230, 215))
+    img.paste(over, (0, 0), over)
+
+
+_TERRAIN = None
+
+
+def scene(t=0.0):
+    global _TERRAIN
+    if _TERRAIN is None:
+        _TERRAIN = (sky(), *terrain())
+    base, layer, hole = _TERRAIN
+    img = base.copy()
+    clouds(img, t)
+    img.paste(portal_tex(t, hole[2] - hole[0], hole[3] - hole[1]), hole[:2])
+    img = img.convert('RGBA')
+    img.alpha_composite(layer)
+    return img.convert('RGB')
+
+
+# ------------------------------------------------------------------ logo
+FONT = {
+    'M': ['10001', '11011', '10101', '10101', '10001', '10001', '10001'],
+    'A': ['01110', '10001', '10001', '11111', '10001', '10001', '10001'],
+    'N': ['10001', '11001', '10101', '10011', '10001', '10001', '10001'],
+    'H': ['10001', '10001', '10001', '11111', '10001', '10001', '10001'],
+    'U': ['10001', '10001', '10001', '10001', '10001', '10001', '01110'],
+    'T': ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
+    'S': ['01111', '10000', '10000', '01110', '00001', '00001', '11110'],
+    'R': ['11110', '10001', '10001', '11110', '10100', '10010', '10001'],
+    'V': ['10001', '10001', '10001', '10001', '01010', '01010', '00100'],
+    'I': ['111', '010', '010', '010', '010', '010', '111'],
+    'L': ['10000', '10000', '10000', '10000', '10000', '10000', '11111'],
+}
+
+
+def cells(text):
+    out, x = [], 0
+    for ch in text:
+        rows = FONT[ch]
+        out += [(x + cx, cy) for cy, r in enumerate(rows) for cx, v in enumerate(r) if v == '1']
+        x += len(rows[0]) + 1
+    return out, x - 1
+
+
+def logo_img(k=4):
+    """Letras de piedra con relieve hacia abajo y el subtítulo amarillo, como un título de juego de bloques."""
+    c, cols = cells('MANHUNT')
+    cs, depth = 6, 3  # cada celda del texto mide 6 px; 3 px de profundidad
+    sub, scols = cells('SURVIVAL')
+    sc = 2
+    w = cols * cs + depth + 2
+    h = 7 * cs + depth + 2 + 7 * sc + 6
+    img = Image.new('RGBA', (w, h))
+    d = ImageDraw.Draw(img)
+    rnd = random.Random(7)
+    for i in range(depth + 1, 0, -1):  # relieve y borde
+        for x, y in c:
+            col = INK if i == depth + 1 else mix(STONE, INK, 0.55 + 0.1 * i / depth)
+            d.rectangle((1 + x * cs + i - 1, 1 + y * cs + i - 1, x * cs + cs + i, y * cs + cs + i), fill=col)
+    for x, y in c:
+        d.rectangle((x * cs, y * cs, x * cs + cs + 1, y * cs + cs + 1), fill=INK)
+    for x, y in c:
+        for py in range(cs):
+            for px_ in range(cs):
+                g = mix((200, 200, 204), STONE, (y * cs + py) / (7 * cs))  # más claro arriba
+                img.putpixel((1 + x * cs + px_, 1 + y * cs + py), (*jitter(g, rnd, 10), 255))
+    ox, oy = (w - scols * sc) // 2, 7 * cs + depth + 5
+    for x, y in sub:
+        d.rectangle((ox + x * sc - 1, oy + y * sc - 1, ox + x * sc + sc, oy + y * sc + sc), fill=INK)
+    for x, y in sub:
+        d.rectangle((ox + x * sc, oy + y * sc, ox + x * sc + sc - 1, oy + y * sc + sc - 1), fill=(255, 220, 60))
+    return up(img, k)
+
+
+# --------------------------------------------------------------- iconos y UI
+COMPASS = [
+    '.....XXXXXX.....',
+    '...XXGGGGGGXX...',
+    '..XGGYYYYYYGGX..',
+    '.XGYWWWWWWWWYGX.',
+    '.XGYWWWWWWRRYGX.',
+    'XGYWWWWWWRRRWYGX',
+    'XGYWWWWWRRRWWYGX',
+    'XGYWWWWXXRWWWYGX',
+    'XGYWWWBXXWWWWYGX',
+    'XGYWWBBBWWWWWYGX',
+    'XGYWBBBWWWWWWYGX',
+    '.XGYBBWWWWWWYGX.',
+    '.XGYWWWWWWWWYGX.',
+    '..XGGYYYYYYGGX..',
+    '...XXGGGGGGXX...',
+    '.....XXXXXX.....',
+]
+
+
+def compass_icon():
+    pal = {'X': INK, 'G': (170, 120, 30), 'Y': GOLD, 'W': (232, 228, 214), 'R': RED, 'B': (70, 100, 200)}
+    img = Image.new('RGBA', (16, 16))
+    for y, row in enumerate(COMPASS):
+        for x, ch in enumerate(row):
+            if ch in pal:
+                img.putpixel((x, y), (*pal[ch], 255))
+    return up(img, 16)
+
+
+def button(w, h, base, hover=False, seed=3):
+    """Botón de piedra: borde negro, luz arriba a la izquierda y sombra abajo a la derecha."""
+    rnd = random.Random(seed)
+    if hover:
+        base = mix(base, (150, 170, 255), 0.35)
+    img = Image.new('RGBA', (w, h))
+    px = img.load()
+    for y in range(h):
+        for x in range(w):
+            if x in (0, w - 1) or y in (0, h - 1):
+                c = WHITE if hover else INK
+            elif y == 1 or x == 1:
+                c = mix(base, WHITE, 0.4)
+            elif y >= h - 3 or x == w - 2:
+                c = mix(base, INK, 0.45)
+            else:
+                c = jitter(base, rnd, 6)
+            px[x, y] = (*c, 255)
+    return img
+
+
+def island():
+    """Isla flotante de bloques donde se para el personaje (grilla de 8 px, agrandada x4)."""
+    img = Image.new('RGBA', (64, 40))
+    rows = [(0, 8, 'grass'), (1, 8, 'dirt'), (2, 6, 'dirt'), (3, 4, 'stone'), (4, 2, 'stone')]
+    for r, n, kind in rows:
+        x0 = (8 - n) * 4
+        for i in range(n):
+            t = texture(kind, r * 9 + i).resize((8, 8), Image.NEAREST)
+            img.alpha_composite(t, (x0 + i * 8, r * 8))
+    return up(img, 4)
+
+
+def glow(w=180, h=220):
+    img = Image.new('RGBA', (w, h))
+    ImageDraw.Draw(img).ellipse((w * 0.15, h * 0.1, w * 0.85, h * 0.9), fill=(255, 220, 140, 110))
+    return img.filter(ImageFilter.GaussianBlur(w / 8))
+
+
+def loading_bar(w=200, h=10, filled=True):
+    img = Image.new('RGBA', (w, h), (*INK, 255))
+    d = ImageDraw.Draw(img)
+    d.rectangle((1, 1, w - 2, h - 2), fill=(90, 160, 60) if filled else (60, 60, 64))
+    if filled:
+        d.line((1, 1, w - 2, 1), fill=(150, 210, 100))
+        for x in range(2, w - 2, 8):  # marcas de bloques
+            d.line((x, 2, x, h - 3), fill=(70, 130, 46))
+    d.line((1, h - 2, w - 2, h - 2), fill=mix((90, 160, 60) if filled else (60, 60, 64), INK, 0.5))
+    return img
 
 
 def save_apng(path, frames, ms):
     frames[0].save(path, save_all=True, append_images=frames[1:], duration=ms, loop=0, optimize=True)
 
 
-def logo_img(text='MANHUNT', sub='SURVIVAL', size=200):
-    font = ImageFont.truetype(str(FONT), size * SS)
-    small = ImageFont.truetype(str(FONT), size * SS // 3)
-    stroke = size * SS // 12
-    l, t, r, b = font.getbbox(text, stroke_width=stroke)
-    sl, st, sr, sb = small.getbbox(sub, stroke_width=stroke // 2)
-    W, H = r - l + stroke * 2, b - t + sb - st + stroke * 2
-    img = Image.new('RGBA', (W, H))
-    d = ImageDraw.Draw(img)
-    ox, oy = stroke - l, stroke - t
-    d.text((ox + stroke * 0.6, oy + stroke * 0.9), text, font=font, fill=INK, stroke_width=stroke, stroke_fill=INK)  # sombra
-    d.text((ox, oy), text, font=font, fill=INK, stroke_width=stroke, stroke_fill=INK)
-    mask = Image.new('L', img.size)
-    ImageDraw.Draw(mask).text((ox, oy), text, font=font, fill=255)
-    grad = Image.new('RGBA', img.size)
-    gd = ImageDraw.Draw(grad)
-    for y in range(H):
-        gd.line((0, y, W, y), fill=(*mix((255, 214, 70), RED, min(1, y / (b - t))), 255))
-    img.paste(grad, (0, 0), mask)
-    # brillo blanco arriba de las letras
-    shine = Image.new('L', img.size)
-    ImageDraw.Draw(shine).text((ox, oy - stroke * 0.5), text, font=font, fill=255)
-    shine = Image.composite(shine, Image.new('L', img.size), mask)
-    shine = shine.point(lambda v: 90 if v else 0)
-    cut = Image.new('L', img.size)
-    ImageDraw.Draw(cut).rectangle((0, 0, W, oy + (b - t) * 0.35), fill=255)
-    img.paste((255, 255, 255, 255), (0, 0), Image.composite(shine, Image.new('L', img.size), cut))
-    sx = (W - (sr - sl)) // 2 - sl
-    sy = oy + b - t - st + stroke // 2
-    d.text((sx, sy), sub, font=small, fill=WHITE, stroke_width=stroke // 2, stroke_fill=INK)
-    return shrink(img, (W // SS, H // SS))
-
-
-def compass_icon(n=256):
-    s = n * SS
-    img = Image.new('RGBA', (s, s))
-    d = ImageDraw.Draw(img)
-    lw = s // 28
-    c, r = s / 2, s * 0.44
-    d.ellipse((c - r, c - r, c + r, c + r), fill=(240, 180, 50), outline=INK, width=lw)
-    r2 = r * 0.78
-    d.ellipse((c - r2, c - r2, c + r2, c + r2), fill=WHITE, outline=INK, width=lw)
-    for i in range(8):
-        a = i / 8 * math.tau
-        k = 0.85 if i % 2 else 0.75
-        d.line((c + r2 * k * math.cos(a), c + r2 * k * math.sin(a), c + r2 * 0.95 * math.cos(a), c + r2 * 0.95 * math.sin(a)), fill=INK, width=lw // 2)
-    a = -math.pi / 4  # aguja apuntando al corredor
-    tip, tail, wd = r2 * 0.85, r2 * 0.85, r2 * 0.2
-    px, py = math.cos(a + math.pi / 2) * wd, math.sin(a + math.pi / 2) * wd
-    blob(d, [(c + tip * math.cos(a), c + tip * math.sin(a)), (c + px, c + py), (c - px, c - py)], RED, lw)
-    blob(d, [(c - tail * math.cos(a), c - tail * math.sin(a)), (c + px, c + py), (c - px, c - py)], (90, 130, 230), lw)
-    d.ellipse((c - lw * 1.6, c - lw * 1.6, c + lw * 1.6, c + lw * 1.6), fill=INK)
-    return shrink(img, (n, n))
-
-
-def button(w, h, color, hover=False, k=4):
-    """Botón redondeado con borde negro, brillo arriba y sombra abajo. Se dibuja a k veces y se reduce."""
-    if hover:
-        color = mix(color, WHITE, 0.25)
-    W, H = w * k, h * k
-    img = Image.new('RGBA', (W, H))
-    d = ImageDraw.Draw(img)
-    rad = min(H // 3, 3 * k)
-    d.rounded_rectangle((0, 0, W - 1, H - 1), rad, fill=INK)
-    d.rounded_rectangle((k, k, W - 1 - k, H - 1 - k), rad - k, fill=mix(color, INK, 0.35))
-    d.rounded_rectangle((k, k, W - 1 - k, H - 1 - 2 * k), rad - k, fill=color)
-    d.rounded_rectangle((2 * k, 2 * k, W - 1 - 2 * k, 2 * k + H // 6), k, fill=mix(color, WHITE, 0.45))
-    return shrink(img, (w, h))
-
-
-def island(w=256, h=160):
-    s = 2
-    img = Image.new('RGBA', (w * s, h * s))
-    d = ImageDraw.Draw(img)
-    W, H = w * s, h * s
-    lw = W // 40
-    blob(d, [(W * 0.06, H * 0.3), (W * 0.94, H * 0.3), (W * 0.7, H * 0.7), (W * 0.55, H * 0.95), (W * 0.42, H * 0.8), (W * 0.28, H * 0.66)], (150, 104, 70), lw)
-    d.line((W * 0.3, H * 0.45, W * 0.5, H * 0.6), fill=INK, width=lw // 2)
-    d.rounded_rectangle((W * 0.02, H * 0.14, W * 0.98, H * 0.36), H * 0.1, fill=HILL_NEAR, outline=INK, width=lw)
-    for x in range(6):
-        gx = W * (0.12 + x * 0.15)
-        d.polygon([(gx, H * 0.36), (gx + W * 0.04, H * 0.36), (gx + W * 0.02, H * 0.46)], fill=HILL_NEAR, outline=INK)
-    return shrink(img, (w, h))
-
-
-def glow(w=180, h=220):
-    img = Image.new('RGBA', (w, h))
-    ImageDraw.Draw(img).ellipse((w * 0.15, h * 0.1, w * 0.85, h * 0.9), fill=(255, 220, 140, 120))
-    return img.filter(ImageFilter.GaussianBlur(w / 8))
-
-
-def loading_bar(w=200, h=10, filled=True):
-    k = 4
-    img = Image.new('RGBA', (w * k, h * k))
-    d = ImageDraw.Draw(img)
-    d.rounded_rectangle((0, 0, w * k - 1, h * k - 1), h * k // 2, fill=INK)
-    inner = (k * 2, k * 2, w * k - 1 - k * 2, h * k - 1 - k * 2)
-    d.rounded_rectangle(inner, h * k // 2 - k * 2, fill=ORANGE if filled else (70, 50, 90))
-    if filled:
-        for x in range(-h * k, w * k, h * k):
-            d.polygon([(x, inner[3]), (x + h * k // 2, inner[1]), (x + h * k, inner[1]), (x + h * k // 2, inner[3])], fill=(255, 176, 70))
-        d.rounded_rectangle(inner, h * k // 2 - k * 2, outline=INK, width=k)
-    return shrink(img, (w, h))
-
-
-def intro(path, frames=44, ms=60):
-    bg = scene(960, 540, 0.0)
-    lg = logo_img(size=120)
+def intro(path, frames=40, ms=60):
+    lg = logo_img(k=2)
     out = []
     for i in range(frames):
-        f = bg.copy()
-        p = min(1, i / 18)
-        # cae desde arriba y rebota (como en las caricaturas)
-        y = 540 * 0.28 + (1 - p) ** 2 * -400 + math.sin(p * math.pi * 3) * (1 - p) * 40
-        sq = 1 + math.sin(min(1, i / 22) * math.pi * 4) * 0.08 * max(0, 1 - i / 26)
-        l = lg.resize((round(lg.width * sq), round(lg.height / sq)), Image.LANCZOS)
-        f.paste(l, (round((960 - l.width) / 2), round(y - l.height / 2)), l)
-        out.append(f.convert('P', palette=Image.ADAPTIVE, colors=200))
+        f = scene(0.0)
+        p = min(1, i / 16)
+        y = int(H * 0.3 - (1 - p) ** 2 * 200 + abs(math.sin(p * math.pi * 2)) * (1 - p) * 24)  # cae y rebota
+        f2 = up(f, 2)
+        f2.paste(lg, ((W * 2 - lg.width) // 2, y * 2 - lg.height // 2), lg)
+        out.append(f2.convert('P', palette=Image.ADAPTIVE, colors=128))
     save_apng(path, out, ms)
 
 
 def blip(path, freqs, ms, vol):
-    """Sonido corto tipo caricatura: varias notas que suben (boing)."""
+    """Click corto y seco, como el de los botones de un juego de bloques."""
     rate = 22050
     n = int(rate * ms / 1000)
     with wave.open(str(path), 'wb') as w:
@@ -260,8 +367,8 @@ def blip(path, freqs, ms, vol):
         for i in range(n):
             k = i / n
             f = freqs[0] + (freqs[1] - freqs[0]) * k
-            v = math.sin(math.tau * f * i / rate) * vol * (1 - k) ** 2
-            data += struct.pack('<h', int(v * 32767))
+            sq = 1 if math.sin(math.tau * f * i / rate) > 0 else -1  # onda cuadrada: suena "retro"
+            data += struct.pack('<h', int(sq * vol * (1 - k) ** 3 * 32767))
         w.writeframes(data)
 
 
@@ -271,22 +378,22 @@ def main():
     assets.mkdir(parents=True, exist_ok=True)
     compass_icon().save(pack / 'icon.png')
     logo_img().save(pack / 'logo.png')
-    scene(1920, 1080).save(pack / 'background.png', optimize=True)
-    save_apng(assets / 'background.apng', [scene(960, 540, i / 30).convert('P', palette=Image.ADAPTIVE, colors=200) for i in range(30)], 100)
+    up(scene(), 4).save(pack / 'background.png', optimize=True)
+    save_apng(assets / 'background.apng', [up(scene(i / 40), 2).convert('P', palette=Image.ADAPTIVE, colors=128) for i in range(40)], 120)
     intro(assets / 'intro.apng')
     island().save(assets / 'island.png')
     glow().save(assets / 'glow.png')
-    button(200, 24, ORANGE).save(assets / 'btn-play.png')
-    button(200, 24, ORANGE, hover=True).save(assets / 'btn-play-hover.png')
-    button(98, 20, (110, 70, 160)).save(assets / 'btn.png')
-    button(98, 20, (110, 70, 160), hover=True).save(assets / 'btn-hover.png')
-    button(98, 20, (120, 112, 130)).save(assets / 'btn-inactive.png')
-    button(8, 20, ORANGE).save(assets / 'slider-handle.png')
-    button(8, 20, ORANGE, hover=True).save(assets / 'slider-handle-hover.png')
+    button(200, 24, (96, 150, 64)).save(assets / 'btn-play.png')
+    button(200, 24, (96, 150, 64), hover=True).save(assets / 'btn-play-hover.png')
+    button(98, 20, (112, 112, 116)).save(assets / 'btn.png')
+    button(98, 20, (112, 112, 116), hover=True).save(assets / 'btn-hover.png')
+    button(98, 20, (60, 60, 64), seed=4).save(assets / 'btn-inactive.png')
+    button(8, 20, (150, 150, 154), seed=5).save(assets / 'slider-handle.png')
+    button(8, 20, (150, 150, 154), hover=True, seed=5).save(assets / 'slider-handle-hover.png')
     loading_bar().save(assets / 'loading-bar.png')
     loading_bar(filled=False).save(assets / 'loading-bar-bg.png')
-    blip(assets / 'hover.wav', (500, 900), 60, 0.12)
-    blip(assets / 'click.wav', (300, 700), 110, 0.2)
+    blip(assets / 'hover.wav', (900, 1100), 25, 0.06)
+    blip(assets / 'click.wav', (420, 260), 60, 0.12)
     for f in sorted([*pack.glob('*.png'), *assets.glob('*.png'), *assets.glob('*.apng')]):
         with Image.open(f) as im:
             print(f'{f.name}: {im.width}x{im.height}, {f.stat().st_size // 1024} KB')

@@ -2,7 +2,7 @@
   "id": "manhunt",
   "name": "Manhunt",
   "description": "Corre o caza: manhunt y supervivencia",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "minecraft": "1.20.1",
   "loader": {
     "type": "fabric",
@@ -13,8 +13,8 @@
   "logo": "logo.png",
   "accent": "#ff8828",
   "changelog": [
-    "Menú: botón Un jugador, intro animada, botones con el estilo del pack y sin la barra del editor de FancyMenu",
-    "Pantalla de carga temprana con el fondo y logo de Manhunt"
+    "Menú nuevo estilo Minecraft: paisaje de bloques al atardecer, portal al Nether animado y letras de piedra",
+    "Botón Un jugador e intro animada"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -24,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T20:15:56.465Z",
+  "generatedAt": "2026-11-08T20:20:12.344Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -166,93 +166,93 @@
     },
     {
       "path": "config/drippyloadingscreen/options.txt",
-      "sha1": "f856821df46d3281d867b410b98843e457ce2304",
+      "sha1": "bd9a1d9261d19bf3d999d99ddd066a5134d36008",
       "size": 2436
     },
     {
       "path": "config/fancymenu/assets/background.apng",
-      "sha1": "251b448b3ca07b0174c15499348bab682eaee56d",
-      "size": 1855087
+      "sha1": "6eac0a2e2b469a0a040a34524280f95289974f91",
+      "size": 2651936
     },
     {
       "path": "config/fancymenu/assets/background.png",
-      "sha1": "a5ff7a7d1329c8c012c6407708994277a3da4c7f",
-      "size": 210196
+      "sha1": "9a2b0eefa5abdeec83d0bcce1ef7158dfec10564",
+      "size": 111756
     },
     {
       "path": "config/fancymenu/assets/btn-hover.png",
-      "sha1": "f0150c2ceba249fad842f85993a4eaf6335ca4f5",
-      "size": 511
+      "sha1": "36b0b76fce19290cfb0d069a900fc1c8f634522f",
+      "size": 1603
     },
     {
       "path": "config/fancymenu/assets/btn-inactive.png",
-      "sha1": "39abdccbf0f0cf496c7fbeca0f708e3054a162e4",
-      "size": 482
+      "sha1": "90485f3213bd2b2e405fd591de026708ce237f1c",
+      "size": 1649
     },
     {
       "path": "config/fancymenu/assets/btn-play-hover.png",
-      "sha1": "2b23301a761de7129212f3a17c34de78ffd1fbed",
-      "size": 548
+      "sha1": "0ce5e7778cc3ff563502263d35862b26caa32129",
+      "size": 3590
     },
     {
       "path": "config/fancymenu/assets/btn-play.png",
-      "sha1": "fa74e124150c738f22985ac3d7834e0c35fb857e",
-      "size": 538
+      "sha1": "7a57f84c73b505cbbe5097dae0fa3e7f64d8f1a7",
+      "size": 3639
     },
     {
       "path": "config/fancymenu/assets/btn.png",
-      "sha1": "d6701e964b256e630c4955724e0d5659523b507d",
-      "size": 509
+      "sha1": "ae2e2270f153ba99b27935281b2ed73089b7f026",
+      "size": 1602
     },
     {
       "path": "config/fancymenu/assets/click.wav",
-      "sha1": "264319837511bf1602d55a9e8bd238bae4574e96",
-      "size": 4894
-    },
-    {
-      "path": "config/fancymenu/assets/glow.png",
-      "sha1": "422945d6ead1e1d065f90460b815b2c851691bf1",
-      "size": 31108
-    },
-    {
-      "path": "config/fancymenu/assets/hover.wav",
-      "sha1": "f85d019d937d2739c4484c180d715c4cd7c47fbb",
+      "sha1": "b395b423e93639c1b8690e836e3df84e3bb26325",
       "size": 2690
     },
     {
+      "path": "config/fancymenu/assets/glow.png",
+      "sha1": "04f935c68e00adc2b7136c49cff25c7a97559530",
+      "size": 30975
+    },
+    {
+      "path": "config/fancymenu/assets/hover.wav",
+      "sha1": "51c8c6179bc89b48e9d4ac039bc27982c09f841e",
+      "size": 1146
+    },
+    {
       "path": "config/fancymenu/assets/intro.apng",
-      "sha1": "0b91e295365b5542966859c6eb0e7b1dc8111829",
-      "size": 1710991
+      "sha1": "b2f021b2c671a11c278167a884b48620ec36b64f",
+      "size": 1122880
     },
     {
       "path": "config/fancymenu/assets/island.png",
-      "sha1": "0d9010688b41ae0728afb322ef1540de09166c4b",
-      "size": 8445
+      "sha1": "279b325e00f078616f8c4d9edf94adfa69154d23",
+      "size": 4503
     },
     {
       "path": "config/fancymenu/assets/loading-bar-bg.png",
-      "sha1": "76232d77aff565b7a6a8c565ad5bb4863710355d",
-      "size": 354
+      "sha1": "1c105101bb75121db2491367db902abe81e54e12",
+      "size": 150
     },
     {
       "path": "config/fancymenu/assets/loading-bar.png",
-      "sha1": "3141c86f542f0fdd1319fd3403b9bd5f7ed2a720",
-      "size": 726
+      "sha1": "41db76b1623b7fa505a18990e871173f38f2b541",
+      "size": 183
     },
     {
       "path": "config/fancymenu/assets/logo.png",
-      "sha1": "94de0847f9f9e7c193e937fc2d876f78f4d5f15e",
-      "size": 83428
+      "sha1": "6c0b9bfe0e59a3656f37c14c67cebc22de1609ce",
+      "size": 12242
     },
     {
       "path": "config/fancymenu/assets/slider-handle-hover.png",
-      "sha1": "6914126d68b501973351ab112fbcec99216fea9a",
-      "size": 393
+      "sha1": "97daf4951c3d7965fbc3e6c8a41e0d213004d813",
+      "size": 273
     },
     {
       "path": "config/fancymenu/assets/slider-handle.png",
-      "sha1": "743356e7512bec422d34978bc9a9d4885b2c13ba",
-      "size": 396
+      "sha1": "97489cbad27f3c17131b8a8229bca376a075afee",
+      "size": 270
     },
     {
       "path": "config/fancymenu/assets/splashes.txt",
@@ -266,22 +266,22 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_carga.txt",
-      "sha1": "68d89e0031569fa482ecc5f33e2f47a7f55ceacb",
+      "sha1": "6f1c49ca3afc9ee17f67c8e59cea3f9f5cd68d77",
       "size": 4287
     },
     {
       "path": "config/fancymenu/customization/cachusafio_connect_screen.txt",
-      "sha1": "1044df25cebbe531a3fa2bad43f14b33d4687b6d",
+      "sha1": "2ae207035ccc0c0879a2bef53f2212f20d793d61",
       "size": 1361
     },
     {
       "path": "config/fancymenu/customization/cachusafio_disconnected_screen.txt",
-      "sha1": "abf9b57d4c840f97697a4228cd22b154ab2bacf5",
+      "sha1": "3d3c5ac8c41b6c5fd1892125aed04c409dee09ba",
       "size": 1366
     },
     {
       "path": "config/fancymenu/customization/cachusafio_level_loading_screen.txt",
-      "sha1": "3605e991f4b694f2ac51719b7e621e3f505d4a25",
+      "sha1": "40ef4068c0942fd04b91778f1c4c73fc8754ee63",
       "size": 1367
     },
     {
@@ -291,12 +291,12 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",
-      "sha1": "f8f42895fba61f00ed36aca08c40a795b2402df2",
+      "sha1": "19e50292afa598d606d5a96d34c41503345a2373",
       "size": 1362
     },
     {
       "path": "config/fancymenu/customization/cachusafio_receiving_level_screen.txt",
-      "sha1": "053e1ca6ecd9ed7924652387011c2748643988da",
+      "sha1": "e632456c135f546c416015d57649cae4bba43018",
       "size": 1369
     },
     {
