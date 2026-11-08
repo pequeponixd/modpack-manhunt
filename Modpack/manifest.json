@@ -13,8 +13,8 @@
   "logo": "logo.png",
   "accent": "#ff8828",
   "changelog": [
-    "Menú nuevo estilo evento: cielo espacial, explosión de vóxeles, logo de bloques con brújula y botones de colores",
-    "Botón Un jugador e intro animada"
+    "Menú nuevo estilo evento: cielo espacial lleno de estrellas, explosión de vóxeles, logo de bloques con brújula y botones de colores",
+    "Intro animada y pantallas de carga con el mismo estilo"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -24,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T20:32:24.468Z",
+  "generatedAt": "2026-11-08T20:34:51.255Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -270,16 +270,6 @@
       "size": 3156
     },
     {
-      "path": "config/fancymenu/assets/txt-singleplayer-hover.png",
-      "sha1": "36e707db06929c33ac424418138f388786d82ffd",
-      "size": 6386
-    },
-    {
-      "path": "config/fancymenu/assets/txt-singleplayer.png",
-      "sha1": "c2facd66e68711814464787a1a3d137ee1a60c03",
-      "size": 5361
-    },
-    {
       "path": "config/fancymenu/customizablemenus.txt",
       "sha1": "8f6af9e075be42cbe54d5bbd8f7c2483c756d241",
       "size": 426
@@ -306,8 +296,8 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_menu.txt",
-      "sha1": "a0081615417651a9240dfc073e447bff00a4a978",
-      "size": 22795
+      "sha1": "054ce50605fc5db08b6db7747bcaccc56e487ddb",
+      "size": 20763
     },
     {
       "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",

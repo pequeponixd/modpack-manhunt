@@ -92,45 +92,6 @@ element {
 }
 
 element {
-  button_element_executable_block_identifier = ded4ef0c-a9ad-426e-a15f-08d83db4261c-1762000000000
-  [executable_action_instance:bf695adc-0cd8-4a22-aec2-4350bc2b59a9-1762000000000][action_type:opengui] = select_world_screen
-  [executable_block:ded4ef0c-a9ad-426e-a15f-08d83db4261c-1762000000000][type:generic] = [executables:bf695adc-0cd8-4a22-aec2-4350bc2b59a9-1762000000000;]
-  backgroundnormal = [source:local]/config/fancymenu/assets/txt-singleplayer.png
-  backgroundhovered = [source:local]/config/fancymenu/assets/txt-singleplayer-hover.png
-  hoversound = [source:local]/config/fancymenu/assets/hover.wav
-  description = Tus mundos (también para abrir en LAN)
-  clicksound = [source:local]/config/fancymenu/assets/click.wav
-  restartbackgroundanimations = true
-  loopbackgroundanimations = true
-  nine_slice_custom_background = false
-  nine_slice_border_x = 5
-  nine_slice_border_y = 5
-  navigatable = true
-  label = 
-  hoverlabel = 
-  element_type = custom_button
-  advanced_posx = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiwidth"}*27/100-{"placeholder":"guiheight"}*22/135","decimal":"false"}}
-  advanced_posy = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*83/135","decimal":"false"}}
-  advanced_width = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*44/135","decimal":"false"}}
-  advanced_height = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*10/135","decimal":"false"}}
-  instance_identifier = c94253f1-395c-40e5-a0b9-cd76e9848972-1762000000000
-  appearance_delay = no_delay
-  appearance_delay_seconds = 1.0
-  fade_in = false
-  fade_in_speed = 1.0
-  anchor_point = top-left
-  x = 0
-  y = 0
-  width = 100
-  height = 16
-  stretch_x = false
-  stretch_y = false
-  stay_on_screen = true
-  element_loading_requirement_container_identifier = fb91988b-ccd8-45b3-add6-3a5e8e988bcf-1762000000000
-  [loading_requirement_container_meta:fb91988b-ccd8-45b3-add6-3a5e8e988bcf-1762000000000] = [groups:][instances:]
-}
-
-element {
   button_element_executable_block_identifier = 9f8fdac4-1249-4706-a869-8fd43276949b-1762000000000
   [executable_action_instance:7e032448-2d0a-4dee-afec-ba0b67a9fef3-1762000000000][action_type:opengui] = options_screen
   [executable_block:9f8fdac4-1249-4706-a869-8fd43276949b-1762000000000][type:generic] = [executables:7e032448-2d0a-4dee-afec-ba0b67a9fef3-1762000000000;]
@@ -149,7 +110,7 @@ element {
   hoverlabel = 
   element_type = custom_button
   advanced_posx = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiwidth"}*27/100-{"placeholder":"guiheight"}*18/135","decimal":"false"}}
-  advanced_posy = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*96/135","decimal":"false"}}
+  advanced_posy = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*83/135","decimal":"false"}}
   advanced_width = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*36/135","decimal":"false"}}
   advanced_height = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*10/135","decimal":"false"}}
   instance_identifier = 63358e1e-3db9-4fd7-a173-d4c4f96b3fe2-1762000000000
@@ -188,7 +149,7 @@ element {
   hoverlabel = 
   element_type = custom_button
   advanced_posx = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiwidth"}*27/100-{"placeholder":"guiheight"}*12/135","decimal":"false"}}
-  advanced_posy = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*109/135","decimal":"false"}}
+  advanced_posy = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*96/135","decimal":"false"}}
   advanced_width = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*24/135","decimal":"false"}}
   advanced_height = {"placeholder":"calc","values":{"expression":"{"placeholder":"guiheight"}*10/135","decimal":"false"}}
   instance_identifier = 0cfaf483-0860-47c7-af2e-9f5426d6db7a-1762000000000

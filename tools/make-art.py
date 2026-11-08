@@ -32,7 +32,6 @@ GOLD_BOT = (255, 140, 40)
 EXTRUDE = (150, 40, 30)
 BUTTONS = {  # texto y color de cada botón del menú (como los de un menú de evento)
     'play': ('JUGAR', (255, 80, 96)),
-    'singleplayer': ('UN JUGADOR', (255, 160, 64)),
     'options': ('OPCIONES', (255, 220, 80)),
     'quit': ('SALIR', (96, 255, 128)),
 }
@@ -364,7 +363,7 @@ def main():
     assets = pack / 'config' / 'fancymenu' / 'assets'
     assets.mkdir(parents=True, exist_ok=True)
     # texturas de estilos anteriores que este menú ya no usa
-    for old in ('island.png', 'glow.png', 'btn-play.png', 'btn-play-hover.png'):
+    for old in ('island.png', 'glow.png', 'btn-play.png', 'btn-play-hover.png', 'txt-singleplayer.png', 'txt-singleplayer-hover.png'):
         (assets / old).unlink(missing_ok=True)
     emblem(124).resize((256, 256), Image.LANCZOS).save(pack / 'icon.png')
     logo_img().save(pack / 'logo.png')

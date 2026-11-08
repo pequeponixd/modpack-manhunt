@@ -9,8 +9,8 @@
   "ramGb": 4,
   "accent": "#ff8828",
   "changelog": [
-    "Menú nuevo estilo evento: cielo espacial, explosión de vóxeles, logo de bloques con brújula y botones de colores",
-    "Botón Un jugador e intro animada"
+    "Menú nuevo estilo evento: cielo espacial lleno de estrellas, explosión de vóxeles, logo de bloques con brújula y botones de colores",
+    "Intro animada y pantallas de carga con el mismo estilo"
   ],
   "externalUrls": {
     "mods/fabric-api-0.92.12+1.20.1.jar": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",
