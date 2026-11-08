@@ -13,8 +13,8 @@
   "logo": "logo.png",
   "accent": "#ff8828",
   "changelog": [
-    "Menú arreglado: los botones se ven, el fondo llena la pantalla y el logo ya no tapa nada",
-    "La intro ya no se queda pegada: termina sola y pasa al menú"
+    "Menú estilo evento arreglado: JUGAR, OPCIONES y SALIR en colores a la izquierda y la explosión a la derecha",
+    "El fondo llena la pantalla y la intro ya no se queda pegada"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -24,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T21:38:36.332Z",
+  "generatedAt": "2026-11-08T21:44:03.674Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -245,6 +245,36 @@
       "size": 149
     },
     {
+      "path": "config/fancymenu/assets/txt-options-hover.png",
+      "sha1": "55b9f6f1ef8517bca77ce8c60ed5f9e19cfa2455",
+      "size": 5205
+    },
+    {
+      "path": "config/fancymenu/assets/txt-options.png",
+      "sha1": "587e57b5440ba7bf3d742274aaf6ac64015f334c",
+      "size": 4553
+    },
+    {
+      "path": "config/fancymenu/assets/txt-play-hover.png",
+      "sha1": "7ed0e37d3db1763862855006224bf9717111dbf8",
+      "size": 3758
+    },
+    {
+      "path": "config/fancymenu/assets/txt-play.png",
+      "sha1": "e47055743d19e2b28b212df91fba6ad5a9a51c47",
+      "size": 3228
+    },
+    {
+      "path": "config/fancymenu/assets/txt-quit-hover.png",
+      "sha1": "5c554eeaab955a4dbe07a5356cf9cb79c9b5b7c3",
+      "size": 3985
+    },
+    {
+      "path": "config/fancymenu/assets/txt-quit.png",
+      "sha1": "8917d40b3a36982c9faf46b88e3443b6c0d8a657",
+      "size": 3156
+    },
+    {
       "path": "config/fancymenu/customizablemenus.txt",
       "sha1": "8f6af9e075be42cbe54d5bbd8f7c2483c756d241",
       "size": 426
@@ -271,8 +301,8 @@
     },
     {
       "path": "config/fancymenu/customization/cachusafio_menu.txt",
-      "sha1": "7d562a9a34f57a38d5924274932d27f289f6e6cd",
-      "size": 21660
+      "sha1": "cf6ccf1edd08aa4c71100b71337df2fa96ecd7b6",
+      "size": 20823
     },
     {
       "path": "config/fancymenu/customization/cachusafio_progress_screen.txt",

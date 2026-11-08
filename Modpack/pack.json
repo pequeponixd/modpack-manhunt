@@ -9,8 +9,8 @@
   "ramGb": 4,
   "accent": "#ff8828",
   "changelog": [
-    "Menú arreglado: los botones se ven, el fondo llena la pantalla y el logo ya no tapa nada",
-    "La intro ya no se queda pegada: termina sola y pasa al menú"
+    "Menú estilo evento arreglado: JUGAR, OPCIONES y SALIR en colores a la izquierda y la explosión a la derecha",
+    "El fondo llena la pantalla y la intro ya no se queda pegada"
   ],
   "externalUrls": {
     "mods/fabric-api-0.92.12+1.20.1.jar": "https://cdn.modrinth.com/data/P7dR8mSH/versions/rvI2dfzR/fabric-api-0.92.12%2B1.20.1.jar",

@@ -2,14 +2,15 @@
 """
 Genera el arte del modpack Manhunt con estilo de "menú de evento": cielo espacial con nebulosa,
 una explosión gigante hecha de vóxeles, plataforma oscura con borde encendido, logo de bloques
-sobre un emblema de brújula y botones pixel art.
+sobre un emblema de brújula y botones de solo texto en colores.
 
     python3 tools/make-art.py Modpack
 
 Crea en Modpack/: icon.png, logo.png, background.png
-y en Modpack/config/fancymenu/assets/: background.apng, intro.apng, btn*.png (botones),
-barra de carga y sonidos.
-Después corre tools/make-menu.js del launcher para armar el menú. Requiere Pillow.
+y en Modpack/config/fancymenu/assets/: background.apng, intro.apng, txt-*.png (botones del menú),
+btn*.png (resto de botones del juego), barra de carga y sonidos.
+Después corre tools/make-menu.js del launcher: al ver txt-play.png arma el menú a la izquierda
+y deja la derecha para el fondo. Requiere Pillow.
 """
 import io
 import math
@@ -31,6 +32,11 @@ FIRE = [(255, 236, 160), (255, 170, 60), (250, 110, 40), (210, 60, 30)]
 GOLD_TOP = (255, 236, 120)
 GOLD_BOT = (255, 140, 40)
 EXTRUDE = (150, 40, 30)
+BUTTONS = {  # texto y color de cada botón del menú (como los de un menú de evento)
+    'play': ('JUGAR', (255, 80, 96)),
+    'options': ('OPCIONES', (255, 220, 80)),
+    'quit': ('SALIR', (96, 255, 128)),
+}
 
 
 def mix(a, b, t):
@@ -277,6 +283,25 @@ def logo_img(cell=16):
     return img
 
 
+def text_button(text, color, hover=False, cell=4):
+    """Botón de solo texto: letras de bloques gruesas del color del botón con un halo suave."""
+    c, cols = cells(text)
+    pad = cell * 4
+    w, h = cols * cell + cell // 2 + pad * 2, 7 * cell + pad * 2
+    face = mix(color, (255, 255, 255), 0.45) if hover else color
+    letters = Image.new('RGBA', (w, h))
+    d = ImageDraw.Draw(letters)
+    for x0, y0, x1, y1 in bold(c, cell):
+        d.rectangle((pad + x0 + 1, pad + y0 + 2, pad + x1 + 1, pad + y1 + 2), fill=(*mix(color, INK, 0.7), 255))  # sombra
+    for x0, y0, x1, y1 in bold(c, cell):
+        d.rectangle((pad + x0, pad + y0, pad + x1, pad + y1), fill=(*face, 255))
+    halo = Image.new('RGBA', (w, h), (*color, 0))
+    halo.putalpha(letters.getchannel('A').filter(ImageFilter.GaussianBlur(cell * (2.2 if hover else 1.4))).point(lambda v: min(255, int(v * (1.4 if hover else 0.8)))))
+    halo.alpha_composite(letters)
+    return halo
+
+
+# ------------------------------------------------------------------ resto de la interfaz
 def ui_button(w, h, hover=False, inactive=False):
     """Botones del resto del juego (Opciones, Volver…): vidrio oscuro con borde naranja."""
     img = Image.new('RGBA', (w, h))
@@ -373,14 +398,16 @@ def main():
     assets = pack / 'config' / 'fancymenu' / 'assets'
     assets.mkdir(parents=True, exist_ok=True)
     # texturas de estilos anteriores que este menú ya no usa
-    for old in ('island.png', 'glow.png', 'btn-play.png', 'btn-play-hover.png', 'txt-singleplayer.png', 'txt-singleplayer-hover.png',
-                *(f'txt-{n}{h}.png' for n in ('play', 'options', 'quit') for h in ('', '-hover'))):
+    for old in ('island.png', 'glow.png', 'btn-play.png', 'btn-play-hover.png', 'txt-singleplayer.png', 'txt-singleplayer-hover.png'):
         (assets / old).unlink(missing_ok=True)
     emblem(124).resize((256, 256), Image.LANCZOS).save(pack / 'icon.png')
     logo_img().save(pack / 'logo.png')
     scene(1920, 1080).save(pack / 'background.png', optimize=True)
     save_apng(assets / 'background.apng', [scene(960, 540, i / 24) for i in range(24)], 110)
     intro(assets / 'intro.apng')
+    for name, (text, color) in BUTTONS.items():
+        text_button(text, color).save(assets / f'txt-{name}.png')
+        text_button(text, color, hover=True).save(assets / f'txt-{name}-hover.png')
     ui_button(98, 20).save(assets / 'btn.png')
     ui_button(98, 20, hover=True).save(assets / 'btn-hover.png')
     ui_button(98, 20, inactive=True).save(assets / 'btn-inactive.png')
