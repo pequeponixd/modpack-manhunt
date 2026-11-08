@@ -37,10 +37,10 @@ element {
   fade_in = false
   fade_in_speed = 1.0
   anchor_point = mid-centered
-  x = -120
-  y = -40
-  width = 240
-  height = 64
+  x = -73
+  y = -91
+  width = 146
+  height = 90
   stretch_x = false
   stretch_y = false
   stay_on_screen = true
