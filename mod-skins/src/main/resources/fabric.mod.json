@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "cachusafio_skins",
+  "version": "${version}",
+  "name": "Cachusafio Skins",
+  "description": "Sincroniza la skin y la capa elegidas en el launcher de Cachusafio con todos los jugadores del servidor, y protege cada nombre con el PIN del launcher.",
+  "authors": ["Cachusafio"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["cl.cachusafio.skins.CachusafioSkins"],
+    "client": ["cl.cachusafio.skins.client.ClientSkins"]
+  },
+  "mixins": ["cachusafio_skins.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.15",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1"
+  }
+}

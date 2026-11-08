@@ -14,7 +14,7 @@
   "accent": "#ff8828",
   "changelog": [
     "Menú nuevo estilo evento: cielo espacial lleno de estrellas, explosión de vóxeles, logo de bloques con brújula y botones de colores",
-    "Intro animada y pantallas de carga con el mismo estilo"
+    "Skins y capas del Vestidor dentro del juego, y nombres protegidos con el PIN del launcher (Cachusafio Skins para Fabric)"
   ],
   "ramGb": 4,
   "keepLocal": [
@@ -24,7 +24,7 @@
   "managedDirs": [
     "mods"
   ],
-  "generatedAt": "2026-11-08T20:34:51.255Z",
+  "generatedAt": "2026-11-08T20:54:03.570Z",
   "files": [
     {
       "path": "mods/ImmediatelyFast-Fabric-1.5.5+1.20.4.jar",
@@ -49,6 +49,11 @@
       "sha1": "f859bb13130788ae2dc2e76a9c80c89e4bbbef5f",
       "size": 1097240,
       "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/N5XeV21r/appleskin-fabric-mc1.20.1-2.5.2.jar"
+    },
+    {
+      "path": "mods/cachusafio-skins-fabric-1.1.0.jar",
+      "sha1": "63894520bd9aaaebb171c864f639ef09ccfdc6ec",
+      "size": 37031
     },
     {
       "path": "mods/drippyloadingscreen_fabric_3.1.5_MC_1.20.1.jar",

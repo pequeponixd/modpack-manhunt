@@ -1,0 +1,41 @@
+plugins {
+    id 'fabric-loom' version '1.7.4'
+}
+
+version = mod_version
+group = 'cl.cachusafio.skins'
+base { archivesName = 'cachusafio-skins-fabric' }
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+loom {
+    runs {
+        // prueba local: ./gradlew runServer y luego ./gradlew runClient -PtestJoin=localhost:25599 [-PtestName=Amigo]
+        client {
+            runDir 'run-client'
+            if (project.hasProperty('testJoin')) programArgs '--username', project.findProperty('testName') ?: 'Pequepon', '--quickPlayMultiplayer', project.property('testJoin')
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // @Nullable de javax.annotation, como en la versión de Forge (solo para compilar)
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+}
+
+processResources {
+    inputs.property 'version', version
+    filesMatching('fabric.mod.json') { expand version: version }
+}
+
+tasks.withType(JavaCompile).configureEach { options.release = 17 }
